@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "kuzzle.fullname" . }}
+  labels:
+    {{- include "kuzzle.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "kuzzle.selectorLabels" . | nindent 6 }}
+  strategy:
+    {{- toYaml .Values.updateStrategy | nindent 4 }}
+  template:
+    metadata:
+    {{- with .Values.metrics }}
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "{{ .path }}"
+        prometheus.io/port: "{{ .port }}"
+    {{- end }}
+      labels:
+        {{- include "kuzzle.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env: 
+            {{- toYaml .Values.extraEnvs | nindent 12 }} 
+          command: 
+            {{- toYaml .Values.command | nindent 12 }}
+          args: 
+            {{- toYaml .Values.args | nindent 12 }}
+          ports:
+            - name: kuzzle-api
+              containerPort: {{ .Values.entrypoints.http.port }}
+              protocol: TCP
+            - name: cluster-command
+              containerPort: {{ .Values.entrypoints.cluster_command.port }}
+              protocol: TCP
+            - name: cluster-sync
+              containerPort: {{ .Values.entrypoints.cluster_sync.port }}
+              protocol: TCP
+          {{- with .Values.entrypoints.mqtt }}
+            - name: kuzzle-mqtt
+              containerPort: {{ .port }}
+              protocol: TCP
+          {{- end }}
+          {{- with .Values.entrypoints.debug }}
+            - name: kuzzle-debug
+              containerPort: {{ .port }}
+              protocol: TCP
+          {{- end }}
+        {{- with .Values.probes.liveness }}
+          livenessProbe:
+            {{- toYaml . | nindent 12 }} 
+        {{- end }}
+        {{- with .Values.probes.readiness }}
+          readinessProbe:
+            {{- toYaml . | nindent 12 }} 
+        {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
