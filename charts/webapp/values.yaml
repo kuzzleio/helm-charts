@@ -23,6 +23,10 @@ service:
     port: 80
     targetPort: 80
 
+args: []
+command: []
+extraEnvs: []
+
 probes:
   liveness:
     enable: true
