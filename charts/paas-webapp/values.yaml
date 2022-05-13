@@ -1,0 +1,51 @@
+webapp:
+  replicaCount: 1
+
+  image:
+    name: nginx
+    tag: latest
+    pullPolicy: Always
+
+  imagePullSecrets:
+    - name: "webapp-docker"
+
+  updateStrategy: RollingUpdate
+
+  service:
+      port: 80
+      targetPort: 80
+
+secret:
+  enabled: true
+  dockerconfigjson: ewogICJhdXRocyI6IHsKICAgICJyZWdpc3RyeSI6IHsKICAgICAgImF1dGgiOiAiWVdSdGFXNDZjR0Z6YzNkdmNtUT0iCiAgICB9CiAgfQp9
+
+certificate:
+  enabled: true
+
+  issuer: letsencrypt
+  host: webapp.test
+  namespace: default
+  name: webapp
+
+  dnsNames:
+    - webapp.test
+
+ingress:
+  enabled: true
+
+  name: webapp
+  namespace: default
+
+  entrypoints:
+    - websecure
+
+  routes:
+    - match: Host(`webapp.test`)
+      kind: Rule
+      services:
+        - name: webapp
+          port: 7512
+          namespace: default
+  tls:
+    enabled: true
+    secretName: webapp

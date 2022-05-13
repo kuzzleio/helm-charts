@@ -1,0 +1,76 @@
+kuzzle:
+  replicaCount: 1
+
+  image:
+    name: kuzzleio/kuzzle
+    tag: 2
+    pullPolicy: Always
+
+  imagePullSecrets:
+    - name: "kuzzle-docker"
+
+  extraEnvs:
+    - name: kuzzle_services__storageEngine__client__node
+      value: http://elasticsearch-master:9200
+    - name: kuzzle_services__internalCache__node__host
+      value: redis-master
+    - name: kuzzle_services__memoryStorage__node__host
+      value: redis-master
+    - name: NODE_ENV
+      value: production
+
+  entrypoints:
+    http:
+      port: 7512
+      targetPort: 7512
+    mqtt:
+      port: 1883
+      targetPort: 1883
+    cluster_command:
+      port: 7510
+      targetPort: 7510
+    cluster_sync:
+      port: 7511
+      targetPort: 7511
+    debug:
+      port: 9229
+      targetPort: 9229
+
+  metrics:
+    port: 7512
+    path: "/_/metrics"
+
+secret:
+  enabled: true
+  dockerconfigjson: ewogICJhdXRocyI6IHsKICAgICJyZWdpc3RyeSI6IHsKICAgICAgImF1dGgiOiAiWVdSdGFXNDZjR0Z6YzNkdmNtUT0iCiAgICB9CiAgfQp9
+
+certificate:
+  enabled: true
+
+  issuer: letsencrypt
+  host: kuzzle.test
+  namespace: default
+  name: kuzzle
+
+  dnsNames:
+    - kuzzle.test
+
+ingress:
+  enabled: true
+
+  name: kuzzle
+  namespace: default
+
+  entrypoints:
+    - websecure
+
+  routes:
+    - match: Host(`kuzzle.test`)
+      kind: Rule
+      services:
+        - name: kuzzle
+          port: 7512
+          namespace: default
+  tls:
+    enabled: true
+    secretName: kuzzle
