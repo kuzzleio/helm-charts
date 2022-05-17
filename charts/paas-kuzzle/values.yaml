@@ -74,3 +74,56 @@ ingress:
   tls:
     enabled: true
     secretName: kuzzle
+
+elasticsearch:
+  replicas: 3
+  imageTag: 7.10.2
+  minimumMasterNodes: 1
+
+
+  roles:
+    master: "true"
+    ingest: "true"
+    data: "true"
+    remote_cluster_client:
+    ml:
+
+  esJavaOpts: "-Xmx512m -Xms512m"
+
+  resources:
+    requests:
+      cpu: "700m"
+      memory: "512M"
+    limits:
+      cpu: "1000m"
+      memory: "1G"
+
+  volumeClaimTemplate:
+    accessModes: [ "ReadWriteOnce" ]
+    storageClassName: "scw-bssd"
+    resources:
+      requests:
+        storage: "15Gi"
+
+redis:
+  usePassword: false
+  master:
+    persistence:
+      enabled: true
+      size: "10Gi"
+  slave:
+    persistence:
+      enabled: true
+      size: "10Gi"
+  cluster:
+    enabled: true
+    slaveCount: 1
+  metrics:
+    enabled: true
+  resources:
+    requests:
+      cpu: "300m"
+      memory: "150Mi"
+    limits:
+      cpu: "600m"
+      memory: "250Mi"
