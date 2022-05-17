@@ -27,9 +27,9 @@ jobs:
       
       - name: Run repo update
         run: |
-          helm repo add https://kuzzleio.github.io/helm-charts/
-          helm repo add https://helm.elastic.co/
-          helm repo add https://charts.bitnami.com/bitnami/
+          helm repo add kuzzle https://kuzzleio.github.io/helm-charts/
+          helm repo add elastic https://helm.elastic.co/
+          helm repo add bitnami https://charts.bitnami.com/bitnami/
           helm repo update
 
       - name: Run chart-releaser
