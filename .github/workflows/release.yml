@@ -24,6 +24,13 @@ jobs:
         uses: azure/setup-helm@v1
         with:
           version: v3.4.0
+      
+      - name: Run repo update
+        run: |
+          helm repo add https://kuzzleio.github.io/helm-charts/
+          helm repo add https://helm.elastic.co/
+          helm repo add https://charts.bitnami.com/bitnami/
+          helm repo update
 
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.2.1
