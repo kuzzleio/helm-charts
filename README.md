@@ -28,9 +28,6 @@ image:
   name: kuzzleio/kuzzle
   tag: 2
 
-imagePullSecrets:
-  - name: secret-name
-
 command: null
 
 metrics:
@@ -116,19 +113,24 @@ helm install bitnami/redis --version 13.0.1 --namespace kuzzle
 
 ```yaml
 usePassword: false
+
 master:
   persistence:
     enabled: true
     size: "10Gi"
+
 slave:
   persistence:
     enabled: true
     size: "10Gi"
+
 cluster:
   enabled: true
   slaveCount: 1
+
 metrics:
   enabled: true
+
 resources:
   requests:
     cpu: "300m"
@@ -157,13 +159,11 @@ helm install kuzzle-charts/webapp --version 0.3.0 --namespace kuzzle
 
 ```yaml
 image:
-  name: rg.fr-par.scw.cloud/production-kloud-clients-cr/iot-panel/iot
+  name: nginx
   tag: latest
-imagePullSecrets:
-  - name: iot
-nodeSelector:
-  k8s.scaleway.com/scw: primary
+
 replicaCount: 1
+
 resources:
   limits:
     cpu: 300m
@@ -171,6 +171,7 @@ resources:
   requests:
     cpu: 300m
     memory: 300Mi
+
 extraEnvs:
   - name: CONFIG_PORT
     value: '443'
