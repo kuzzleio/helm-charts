@@ -17,6 +17,7 @@ webapp:
 
 secret:
   enabled: true
+  name: webapp-secret
   dockerconfigjson: ewogICJhdXRocyI6IHsKICAgICJyZWdpc3RyeSI6IHsKICAgICAgImF1dGgiOiAiWVdSdGFXNDZjR0Z6YzNkdmNtUT0iCiAgICB9CiAgfQp9
 
 certificate:
