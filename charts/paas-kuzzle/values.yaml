@@ -42,6 +42,12 @@ kuzzle:
     port: 7512
     path: "/_/metrics"
 
+secretElasticsearch:
+  enabled: true
+  name: es-secret
+  namespace: default
+  dockerconfigjson: ewogICJhdXRocyI6IHsKICAgICJyZWdpc3RyeSI6IHsKICAgICAgImF1dGgiOiAiWVdSdGFXNDZjR0Z6YzNkdmNtUT0iCiAgICB9CiAgfQp9
+
 secret:
   enabled: true
   name: kuzzle-secret
