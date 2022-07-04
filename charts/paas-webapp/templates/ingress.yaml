@@ -4,6 +4,10 @@ kind: IngressRoute
 metadata:
   name: {{ .Values.ingress.name }}
   namespace: {{ .Values.ingress.namespace }}
+  {{- with .Values.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   {{- with .Values.ingress.entryPoints }}
   entryPoints:

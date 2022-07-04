@@ -42,6 +42,12 @@ kuzzle:
     port: 7512
     path: "/_/metrics"
 
+secretRoute53:
+  enabled: true
+  name: route53-secret
+  namespace: default
+  secret_key: bXktc3VwZXItc2VjcmV0LWtleQ==
+
 secretElasticsearch:
   enabled: true
   name: es-secret
@@ -70,6 +76,10 @@ ingress:
 
   name: kuzzle
   namespace: default
+
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-dns"
+    certmanager.k8s.io/acme-challenge-type: dns01
 
   entrypoints:
     - websecure
