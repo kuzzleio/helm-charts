@@ -13,6 +13,26 @@ entries:
     version: 0.1.0
   paas-kuzzle:
   - apiVersion: v2
+    appVersion: "2"
+    created: "2022-07-04T17:15:18.6328718Z"
+    dependencies:
+    - name: kuzzle
+      repository: https://kuzzleio.github.io/helm-charts/
+      version: 0.1.0
+    - name: elasticsearch
+      repository: https://helm.elastic.co/
+      version: 7.11.1
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami/
+      version: 16.12.2
+    description: A Helm chart for Kubernetes
+    digest: cc9b2fa229cdd6e6c5de2a1540b319f6c276e73b4262d0a3f1a0b06e67b2b40a
+    name: paas-kuzzle
+    type: application
+    urls:
+    - https://github.com/kuzzleio/helm-charts/releases/download/paas-kuzzle-1.0.0/paas-kuzzle-1.0.0.tgz
+    version: 1.0.0
+  - apiVersion: v2
     appVersion: 1.16.0
     created: "2022-06-24T12:24:46.4751856Z"
     dependencies:
@@ -128,6 +148,20 @@ entries:
     version: 0.1.0
   paas-webapp:
   - apiVersion: v2
+    appVersion: "2"
+    created: "2022-07-04T17:15:18.94679813Z"
+    dependencies:
+    - name: webapp
+      repository: https://kuzzleio.github.io/helm-charts
+      version: 0.3.0
+    description: A Helm chart for Kubernetes
+    digest: 2f3a76dbe918c80e1fa3144612ee5c2c46e1af744735fe2e8223f3693066d4ad
+    name: paas-webapp
+    type: application
+    urls:
+    - https://github.com/kuzzleio/helm-charts/releases/download/paas-webapp-1.0.0/paas-webapp-1.0.0.tgz
+    version: 1.0.0
+  - apiVersion: v2
     appVersion: 1.16.0
     created: "2022-05-18T13:47:29.185887585Z"
     dependencies:
@@ -228,4 +262,4 @@ entries:
     urls:
     - https://github.com/kuzzleio/helm-charts/releases/download/webapp-0.1.0/webapp-0.1.0.tgz
     version: 0.1.0
-generated: "2022-06-24T12:24:46.475223Z"
+generated: "2022-07-04T17:15:18.94687253Z"
