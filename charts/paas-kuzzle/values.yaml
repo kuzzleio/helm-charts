@@ -63,7 +63,7 @@ secret:
 certificate:
   enabled: true
 
-  issuer: letsencrypt
+  issuer: letsencrypt-dns
   host: kuzzle.test
   namespace: default
   name: kuzzle

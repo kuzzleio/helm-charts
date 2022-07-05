@@ -31,7 +31,7 @@ secret:
 certificate:
   enabled: true
 
-  issuer: letsencrypt
+  issuer: letsencrypt-dns
   host: webapp.test
   namespace: default
   name: webapp
