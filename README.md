@@ -106,38 +106,29 @@ helm repo add bitnami https://charts.bitnami.com/bitnami
 helm repo update
 
 # Add the redis chart to your cluster
-helm install bitnami/redis --version 13.0.1 --namespace kuzzle
+helm install bitnami/redis --namespace kuzzle
 ```
 
 #### Values file for redis
 
 ```yaml
-usePassword: false
+auth:
+  enabled: false
 
-master:
-  persistence:
-    enabled: true
-    size: "10Gi"
-
-slave:
-  persistence:
-    enabled: true
-    size: "10Gi"
-
-cluster:
-  enabled: true
-  slaveCount: 1
+replica:
+  replicaCount: 0
 
 metrics:
   enabled: true
 
-resources:
-  requests:
-    cpu: "300m"
-    memory: "150Mi"
-  limits:
-    cpu: "600m"
-    memory: "250Mi"
+master:
+  resources:
+    requests:
+      cpu: "300m"
+      memory: "150Mi"
+    limits:
+      cpu: "600m"
+      memory: "250Mi"
 ```
 
 ### Installing a frontend chart

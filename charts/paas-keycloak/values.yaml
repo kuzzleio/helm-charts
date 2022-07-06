@@ -1,0 +1,53 @@
+keycloak:
+  replicas: 1
+  extraEnv: |
+    - name: PROXY_ADDRESS_FORWARDING
+      value: "true"
+  ingress:
+    enabled: false
+    postgresql:
+      enabled: true
+    serviceMonitor:
+      enabled: true
+
+
+secretRoute53:
+  enabled: true
+  name: route53-secret
+  namespace: default
+  secret_key: bXktc3VwZXItc2VjcmV0LWtleQ==
+
+certificate:
+  enabled: true
+
+  issuer: letsencrypt-dns
+  host: webapp.test
+  namespace: default
+  name: webapp
+
+  dnsNames:
+    - webapp.test
+
+ingress:
+  enabled: true
+
+  name: webapp
+  namespace: default
+
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-dns"
+    certmanager.k8s.io/acme-challenge-type: dns01
+
+  entrypoints:
+    - websecure
+
+  routes:
+    - match: Host(`webapp.test`)
+      kind: Rule
+      services:
+        - name: webapp
+          port: 7512
+          namespace: default
+  tls:
+    enabled: true
+    secretName: webapp
