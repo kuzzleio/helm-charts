@@ -11,6 +11,21 @@ entries:
     urls:
     - https://github.com/kuzzleio/helm-charts/releases/download/kuzzle-0.1.0/kuzzle-0.1.0.tgz
     version: 0.1.0
+  paas-keycloak:
+  - apiVersion: v2
+    appVersion: "2"
+    created: "2022-07-06T14:43:34.830277007Z"
+    dependencies:
+    - name: keycloak
+      repository: https://codecentric.github.io/helm-charts
+      version: 18.1.1
+    description: A Helm chart for Kubernetes
+    digest: d079e5dec6469328665d764b6d77829324120e713f52e3c7e5501c89531b3265
+    name: paas-keycloak
+    type: application
+    urls:
+    - https://github.com/kuzzleio/helm-charts/releases/download/paas-keycloak-0.1.0/paas-keycloak-0.1.0.tgz
+    version: 0.1.0
   paas-kuzzle:
   - apiVersion: v2
     appVersion: "2"
@@ -296,4 +311,4 @@ entries:
     urls:
     - https://github.com/kuzzleio/helm-charts/releases/download/webapp-0.1.0/webapp-0.1.0.tgz
     version: 0.1.0
-generated: "2022-07-05T08:33:55.950445176Z"
+generated: "2022-07-06T14:43:34.830329805Z"
