@@ -1,4 +1,4 @@
-iot:
+iot-console:
   replicaCount: 1
 
   image:
