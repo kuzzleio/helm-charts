@@ -22,6 +22,21 @@ entries:
     urls:
     - https://github.com/kuzzleio/helm-charts/releases/download/kuzzle-0.1.0/kuzzle-0.1.0.tgz
     version: 0.1.0
+  paas-iot:
+  - apiVersion: v2
+    appVersion: "2"
+    created: "2022-08-16T15:14:56.73419703Z"
+    dependencies:
+    - name: iot
+      repository: https://kuzzleio.github.io/helm-charts
+      version: 0.1.0
+    description: A Helm chart for Kubernetes
+    digest: 90c23e6a4e7df5fd90760326d29ea43914601826b07e3e5e142e693cab618dcb
+    name: paas-iot
+    type: application
+    urls:
+    - https://github.com/kuzzleio/helm-charts/releases/download/paas-iot-1.0.0/paas-iot-1.0.0.tgz
+    version: 1.0.0
   paas-keycloak:
   - apiVersion: v2
     appVersion: "2"
@@ -322,4 +337,4 @@ entries:
     urls:
     - https://github.com/kuzzleio/helm-charts/releases/download/webapp-0.1.0/webapp-0.1.0.tgz
     version: 0.1.0
-generated: "2022-08-16T15:12:50.368449044Z"
+generated: "2022-08-16T15:14:56.734235031Z"
