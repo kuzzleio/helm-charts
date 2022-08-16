@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "iot.fullname" . }}
+  name: {{ include "iot-console.fullname" . }}
   labels:
-    {{- include "iot.labels" . | nindent 4 }}
+    {{- include "iot-console.labels" . | nindent 4 }}
 spec:
   type: ClusterIP
   ports:
@@ -12,5 +12,5 @@ spec:
       protocol: TCP
       name: http
   selector:
-    {{- include "iot.selectorLabels" . | nindent 4 }}
+    {{- include "iot-console.selectorLabels" . | nindent 4 }}
 

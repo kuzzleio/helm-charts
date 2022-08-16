@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "iot.fullname" . }}
+  name: {{ include "iot-console.fullname" . }}
   labels:
-    {{- include "iot.labels" . | nindent 4 }}
+    {{- include "iot-console.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "iot.selectorLabels" . | nindent 6 }}
+      {{- include "iot-console.selectorLabels" . | nindent 6 }}
   strategy:
     type: {{ .Values.updateStrategy }}
   template:
     metadata:
       labels:
-        {{- include "iot.selectorLabels" . | nindent 8 }}
+        {{- include "iot-console.selectorLabels" . | nindent 8 }}
     spec:
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
