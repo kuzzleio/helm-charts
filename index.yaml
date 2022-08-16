@@ -1,5 +1,16 @@
 apiVersion: v1
 entries:
+  iot:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2022-08-16T15:12:50.368407643Z"
+    description: A web application
+    digest: 7f41a72ea87239e9f65c65f07cbdd50098bcdc580120ac6277070146afda065f
+    name: iot
+    type: application
+    urls:
+    - https://github.com/kuzzleio/helm-charts/releases/download/iot-0.1.0/iot-0.1.0.tgz
+    version: 0.1.0
   kuzzle:
   - apiVersion: v2
     appVersion: 2.1.0
@@ -311,4 +322,4 @@ entries:
     urls:
     - https://github.com/kuzzleio/helm-charts/releases/download/webapp-0.1.0/webapp-0.1.0.tgz
     version: 0.1.0
-generated: "2022-07-06T14:43:34.830329805Z"
+generated: "2022-08-16T15:12:50.368449044Z"
