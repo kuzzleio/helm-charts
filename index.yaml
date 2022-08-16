@@ -11,6 +11,17 @@ entries:
     urls:
     - https://github.com/kuzzleio/helm-charts/releases/download/iot-0.1.0/iot-0.1.0.tgz
     version: 0.1.0
+  iot-console:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2022-08-16T16:00:10.785806483Z"
+    description: A web application
+    digest: b1c59b165f89a33250afdd8d3eb49ed83d78432b0a099f1526726e5510e8ab37
+    name: iot-console
+    type: application
+    urls:
+    - https://github.com/kuzzleio/helm-charts/releases/download/iot-console-0.1.0/iot-console-0.1.0.tgz
+    version: 0.1.0
   kuzzle:
   - apiVersion: v2
     appVersion: 2.1.0
@@ -337,4 +348,4 @@ entries:
     urls:
     - https://github.com/kuzzleio/helm-charts/releases/download/webapp-0.1.0/webapp-0.1.0.tgz
     version: 0.1.0
-generated: "2022-08-16T15:14:56.734235031Z"
+generated: "2022-08-16T16:00:10.785843483Z"
