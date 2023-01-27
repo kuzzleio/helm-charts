@@ -11,6 +11,9 @@ image:
 
 imagePullSecrets: []
 
+labels: {}
+podLabels: {}
+
 nameOverride: ""
 fullnameOverride: ""
 
@@ -33,7 +36,7 @@ extraEnvs:
   - name: NODE_ENV
     value: production
 
-command: [ "kuzzle", "start" ]
+command: ["kuzzle", "start"]
 args: []
 
 entrypoints:
@@ -67,7 +70,8 @@ metrics:
   port: 7512
   path: "/_/prometheus/metrics"
 
-securityContext: {}
+securityContext:
+  {}
   # capabilities:
   #   drop:
   #   - ALL
@@ -75,7 +79,8 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
-resources: {}
+resources:
+  {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
