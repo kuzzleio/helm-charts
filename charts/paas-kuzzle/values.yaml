@@ -95,6 +95,29 @@ ingress:
     enabled: true
     secretName: kuzzle
 
+ingressTCP:
+  enabled: false
+
+  name: kuzzle
+  namespace: default
+
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-dns"
+    certmanager.k8s.io/acme-challenge-type: dns01
+
+  entrypoints:
+    - websecure
+
+  routes:
+    - match: HostSNI(`mqtt-kuzzle.test`)
+      services:
+        - name: kuzzle
+          port: 1883
+          namespace: default
+  tls:
+    enabled: true
+    secretName: kuzzle
+
 elasticsearch:
   replicas: 3
   imageTag: 7.10.2
