@@ -97,3 +97,15 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+# Extra Containers to run before the main container in the pod (e.g. for sidecar containers)
+# extraContainers:
+#   - name: my-sidecar
+#     image: my-sidecar-image
+#     imagePullPolicy: Always
+#     resources:
+#       {}
+#     volumeMounts:
+#       - name: my-volume
+#         mountPath: /path/to/my-volume
+extraInitContainers: []
