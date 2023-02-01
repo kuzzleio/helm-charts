@@ -43,16 +43,19 @@ entrypoints:
   http:
     port: 7512
     targetPort: 7512
-  mqtt:
-    port: 1883
-    targetPort: 1883
   cluster_command:
     port: 7510
     targetPort: 7510
   cluster_sync:
     port: 7511
     targetPort: 7511
-  debug:
+
+extraEntrypoints:
+  - name: mqtt
+    port: 1883
+    targetPort: 1883
+
+  - name: debug
     port: 9229
     targetPort: 9229
 

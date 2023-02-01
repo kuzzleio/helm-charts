@@ -19,17 +19,11 @@ spec:
       targetPort: {{ .Values.entrypoints.cluster_sync.targetPort }}
       protocol: TCP
       name: cluster-sync
-  {{- with .Values.entrypoints.mqtt }}
+  {{- with .Values.extraEntrypoints }}
     - port: {{ .port }}
       targetPort: {{ .targetPort }}
       protocol: TCP
-      name: kuzzle-mqtt
-  {{- end }}
-  {{- with .Values.entrypoints.debug }}
-    - port: {{ .port }}
-      targetPort: {{ .targetPort }}
-      protocol: TCP
-      name: kuzzle-debug
+      name: {{ .name }}
   {{- end }}
   selector:
     {{- include "kuzzle.selectorLabels" . | nindent 4 }}
