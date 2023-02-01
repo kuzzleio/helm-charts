@@ -54,10 +54,12 @@ extraEntrypoints:
   - name: mqtt
     port: 1883
     targetPort: 1883
+    protocol: TCP
 
   - name: debug
     port: 9229
     targetPort: 9229
+    protocol: TCP
 
 probes:
   liveness:
