@@ -25,7 +25,7 @@ appVersion: "2.0.0"
 
 dependencies:
   - name: kuzzle
-    version: 1.0.0
+    version: 1.0.1
     repository: "https://kuzzleio.github.io/helm-charts/"
   - name: elasticsearch
     version: 7.13.4
