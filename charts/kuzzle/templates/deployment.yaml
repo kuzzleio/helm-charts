@@ -62,10 +62,10 @@ spec:
             - name: cluster-sync
               containerPort: {{ .Values.entrypoints.cluster_sync.port }}
               protocol: TCP
-          {{- with .Values.extraEntrypoints }}
+          {{- range .Values.extraEntrypoints }}
             - name: {{ .name }}
               containerPort: {{ .port }}
-              protocol: TCP
+              protocol: {{ .protocol }}
           {{- end }}
         {{- with .Values.probes.liveness }}
           livenessProbe:

@@ -11,19 +11,19 @@ spec:
       targetPort: {{ .Values.entrypoints.http.targetPort }}
       protocol: TCP
       name: kuzzle-api
+
     - port: {{ .Values.entrypoints.cluster_command.port }}
       targetPort: {{ .Values.entrypoints.cluster_command.targetPort }}
       protocol: TCP
       name: cluster-command
+
     - port: {{ .Values.entrypoints.cluster_sync.port }}
       targetPort: {{ .Values.entrypoints.cluster_sync.targetPort }}
       protocol: TCP
       name: cluster-sync
+
   {{- with .Values.extraEntrypoints }}
-    - port: {{ .port }}
-      targetPort: {{ .targetPort }}
-      protocol: TCP
-      name: {{ .name }}
+    {{- toYaml . | nindent 4 }}
   {{- end }}
   selector:
     {{- include "kuzzle.selectorLabels" . | nindent 4 }}
