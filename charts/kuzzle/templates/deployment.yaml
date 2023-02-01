@@ -62,13 +62,8 @@ spec:
             - name: cluster-sync
               containerPort: {{ .Values.entrypoints.cluster_sync.port }}
               protocol: TCP
-          {{- with .Values.entrypoints.mqtt }}
-            - name: kuzzle-mqtt
-              containerPort: {{ .port }}
-              protocol: TCP
-          {{- end }}
-          {{- with .Values.entrypoints.debug }}
-            - name: kuzzle-debug
+          {{- with .Values.extraEntrypoints }}
+            - name: {{ .name }}
               containerPort: {{ .port }}
               protocol: TCP
           {{- end }}
