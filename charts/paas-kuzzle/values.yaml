@@ -1,3 +1,9 @@
+ingress:
+  enabled: false
+
+ingressTCP:
+  enabled: false
+
 kuzzle:
   replicaCount: 1
 
@@ -21,105 +27,12 @@ kuzzle:
     - name: NODE_ENV
       value: production
 
-  entrypoints:
-    http:
-      port: 7512
-      targetPort: 7512
-    mqtt:
-      port: 1883
-      targetPort: 1883
-    cluster_command:
-      port: 7510
-      targetPort: 7510
-    cluster_sync:
-      port: 7511
-      targetPort: 7511
-    debug:
-      port: 9229
-      targetPort: 9229
-
   metrics:
     port: 7512
     path: "/_/metrics"
 
-secretRoute53:
-  enabled: true
-  name: route53-secret
-  namespace: default
-  secret_key: bXktc3VwZXItc2VjcmV0LWtleQ==
-
-secretElasticsearch:
-  enabled: true
-  name: es-secret
-  namespace: default
-  dockerconfigjson: ewogICJhdXRocyI6IHsKICAgICJyZWdpc3RyeSI6IHsKICAgICAgImF1dGgiOiAiWVdSdGFXNDZjR0Z6YzNkdmNtUT0iCiAgICB9CiAgfQp9
-
-secret:
-  enabled: true
-  name: kuzzle-secret
-  namespace: default
-  dockerconfigjson: ewogICJhdXRocyI6IHsKICAgICJyZWdpc3RyeSI6IHsKICAgICAgImF1dGgiOiAiWVdSdGFXNDZjR0Z6YzNkdmNtUT0iCiAgICB9CiAgfQp9
-
-certificate:
-  enabled: true
-
-  issuer: letsencrypt-dns
-  host: kuzzle.test
-  namespace: default
-  name: kuzzle
-
-  dnsNames:
-    - kuzzle.test
-
-ingress:
-  enabled: true
-
-  name: kuzzle
-  namespace: default
-
-  annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-dns"
-    certmanager.k8s.io/acme-challenge-type: dns01
-
-  entrypoints:
-    - websecure
-
-  routes:
-    - match: Host(`kuzzle.test`)
-      kind: Rule
-      services:
-        - name: kuzzle
-          port: 7512
-          namespace: default
-  tls:
-    enabled: true
-    secretName: kuzzle
-
-ingressTCP:
-  enabled: false
-
-  name: kuzzle
-  namespace: default
-
-  annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-dns"
-    certmanager.k8s.io/acme-challenge-type: dns01
-
-  entrypoints:
-    - websecure
-
-  routes:
-    - match: HostSNI(`mqtt-kuzzle.test`)
-      services:
-        - name: kuzzle
-          port: 1883
-          namespace: default
-  tls:
-    enabled: true
-    secretName: kuzzle
-
 elasticsearch:
-  replicas: 3
+  replicas: 1
   imageTag: 7.10.2
   minimumMasterNodes: 1
 
