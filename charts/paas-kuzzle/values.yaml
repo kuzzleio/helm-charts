@@ -4,6 +4,9 @@ ingress:
 ingressTCP:
   enabled: false
 
+certificate:
+  enabled: true
+
 kuzzle:
   replicaCount: 1
 
