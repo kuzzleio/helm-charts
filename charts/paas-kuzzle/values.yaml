@@ -5,7 +5,7 @@ ingressTCP:
   enabled: false
 
 certificate:
-  enabled: true
+  enabled: false
 
 kuzzle:
   replicaCount: 1
