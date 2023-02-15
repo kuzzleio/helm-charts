@@ -494,6 +494,20 @@ entries:
     version: 0.1.0
   paas-webapp:
   - apiVersion: v2
+    appVersion: 2.0.0
+    created: "2023-02-15T14:04:36.216684224Z"
+    dependencies:
+    - name: webapp
+      repository: https://kuzzleio.github.io/helm-charts
+      version: 1.0.1
+    description: A Helm chart for Kubernetes
+    digest: d9693d0f6065f27971e3f9aaf41aed82429cc54073044e3367d31ab20bc0f757
+    name: paas-webapp
+    type: application
+    urls:
+    - https://github.com/kuzzleio/helm-charts/releases/download/paas-webapp-2.0.0/paas-webapp-2.0.0.tgz
+    version: 2.0.0
+  - apiVersion: v2
     appVersion: "2"
     created: "2022-07-05T08:33:55.950382777Z"
     dependencies:
@@ -642,4 +656,4 @@ entries:
     urls:
     - https://github.com/kuzzleio/helm-charts/releases/download/webapp-0.1.0/webapp-0.1.0.tgz
     version: 0.1.0
-generated: "2023-02-15T13:58:20.460668558Z"
+generated: "2023-02-15T14:04:36.216872824Z"
