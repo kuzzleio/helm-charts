@@ -24,11 +24,11 @@ service:
     targetPort: 80
 
 # Configure extra entrypoints
-extraEntrypoints:
-  - name: mqtt
-    port: 1883
-    targetPort: 1883
-    protocol: TCP
+# extraEntrypoints:
+#   - name: mqtt
+#     port: 1883
+#     targetPort: 1883
+#     protocol: TCP
 
 args: []
 command: []
