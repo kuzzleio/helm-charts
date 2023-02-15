@@ -11,6 +11,9 @@ spec:
       targetPort: {{ .Values.service.targetPort }}
       protocol: TCP
       name: http
+  {{- with .Values.extraEntrypoints }}
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   selector:
     {{- include "webapp.selectorLabels" . | nindent 4 }}
 

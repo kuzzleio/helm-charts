@@ -38,6 +38,11 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
+          {{- range .Values.extraEntrypoints }}
+            - name: {{ .name }}
+              containerPort: {{ .port }}
+              protocol: {{ .protocol }}
+          {{- end }}
           {{- if .Values.probes.liveness.enable }}
           livenessProbe:
             {{- toYaml .Values.probes.liveness.config | nindent 12 }} 
