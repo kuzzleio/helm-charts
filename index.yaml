@@ -593,6 +593,16 @@ entries:
     version: 0.1.0
   webapp:
   - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2023-02-15T13:53:04.857635815Z"
+    description: A web application
+    digest: ee43f2ddc4b55db0249c051314b0e435298b0caadb5b7fc94f1c9f74cca8fcb0
+    name: webapp
+    type: application
+    urls:
+    - https://github.com/kuzzleio/helm-charts/releases/download/webapp-1.0.0/webapp-1.0.0.tgz
+    version: 1.0.0
+  - apiVersion: v2
     appVersion: 1.16.0
     created: "2022-03-24T14:37:00.15694493Z"
     description: A web application
@@ -622,4 +632,4 @@ entries:
     urls:
     - https://github.com/kuzzleio/helm-charts/releases/download/webapp-0.1.0/webapp-0.1.0.tgz
     version: 0.1.0
-generated: "2023-02-06T13:42:51.661110735Z"
+generated: "2023-02-15T13:53:04.857746216Z"
