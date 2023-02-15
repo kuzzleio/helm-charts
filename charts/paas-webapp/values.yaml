@@ -15,50 +15,49 @@ webapp:
       port: 80
       targetPort: 80
 
-
-secretRoute53:
-  enabled: true
-  name: route53-secret
-  namespace: default
-  secret_key: bXktc3VwZXItc2VjcmV0LWtleQ==
+  # Configure extra entrypoints
+  # extraEntrypoints:
+  #   - name: mqtt
+  #     port: 1883
+  #     targetPort: 1883
+  #     protocol: TCP
 
 
 secret:
-  enabled: true
-  name: webapp-secret
-  dockerconfigjson: ewogICJhdXRocyI6IHsKICAgICJyZWdpc3RyeSI6IHsKICAgICAgImF1dGgiOiAiWVdSdGFXNDZjR0Z6YzNkdmNtUT0iCiAgICB9CiAgfQp9
+  enabled: false
+  # name: webapp-secret
+  # dockerconfigjson: ewogICJhdXRocyI6IHsKICAgICJyZWdpc3RyeSI6IHsKICAgICAgImF1dGgiOiAiWVdSdGFXNDZjR0Z6YzNkdmNtUT0iCiAgICB9CiAgfQp9
 
 certificate:
-  enabled: true
+  enabled: false
+  # issuer: letsencrypt-dns
+  # host: webapp.test
+  # namespace: default
+  # name: webapp
 
-  issuer: letsencrypt-dns
-  host: webapp.test
-  namespace: default
-  name: webapp
-
-  dnsNames:
-    - webapp.test
+  # dnsNames:
+  #   - webapp.test
 
 ingress:
-  enabled: true
+  enabled: false
 
-  name: webapp
-  namespace: default
+  # name: webapp
+  # namespace: default
 
-  annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-dns"
-    certmanager.k8s.io/acme-challenge-type: dns01
+  # annotations:
+  #   cert-manager.io/cluster-issuer: "letsencrypt-dns"
+  #   certmanager.k8s.io/acme-challenge-type: dns01
 
-  entrypoints:
-    - websecure
+  # entrypoints:
+  #   - websecure
 
-  routes:
-    - match: Host(`webapp.test`)
-      kind: Rule
-      services:
-        - name: webapp
-          port: 7512
-          namespace: default
-  tls:
-    enabled: true
-    secretName: webapp
+  # routes:
+  #   - match: Host(`webapp.test`)
+  #     kind: Rule
+  #     services:
+  #       - name: webapp
+  #         port: 7512
+  #         namespace: default
+  # tls:
+  #   enabled: true
+  #   secretName: webapp
