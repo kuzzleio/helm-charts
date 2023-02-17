@@ -1,0 +1,94 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "chirpstack.core" . }}
+  labels:
+    {{- include "chirpstack.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.chirpstack.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "chirpstack.selectorLabels" . | nindent 6 }}
+      component: core
+  template:
+    metadata:
+      annotations:
+        {{- with .Values.chirpstack.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- if .Values.chirpstack.entrypoints.metrics.enabled }}
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/metrics"
+        prometheus.io/port: "{{ .Values.chirpstack.entrypoints.metrics.port }}"
+        {{- end }}
+      labels:
+        {{- include "chirpstack.selectorLabels" . | nindent 8 }}
+        component: core
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.securityContext | nindent 8 }}
+      containers:
+        - name: {{ .Values.chirpstack.name }}
+          securityContext:
+            {{- toYaml .Values.chirpstack.containerSecurityContext | nindent 12 }}
+          image: "{{ .Values.chirpstack.image.repository }}:{{ .Values.chirpstack.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
+          env:
+            {{- toYaml .Values.chirpstack.extraEnvs | nindent 12 }}
+          command:
+            {{- toYaml .Values.chirpstack.command | nindent 12 }}
+          args:
+            {{- toYaml .Values.chirpstack.args | nindent 12 }}
+          volumeMounts:
+            - name: config
+              mountPath: /etc/chirpstack
+          ports:
+            - name: http
+              containerPort: {{ .Values.chirpstack.entrypoints.http.port }}
+              protocol: TCP
+            {{- if .Values.chirpstack.entrypoints.metrics.enabled }}
+            - name: metrics
+              containerPort: {{ .Values.chirpstack.entrypoints.metrics.port }}
+              protocol: TCP
+            {{ end }}
+          {{- if .Values.chirpstack.entrypoints.metrics.enabled }}
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: metrics
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: metrics
+          {{- else }}
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          {{ end }}
+          resources:
+            {{- toYaml .Values.chirpstack.resources | nindent 12 }}
+      volumes:
+        - name: config
+          configMap:
+            name: {{ template "chirpstack.core" . }}
+      {{- with .Values.chirpstack.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.chirpstack.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.chirpstack.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

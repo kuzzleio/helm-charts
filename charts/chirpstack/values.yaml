@@ -1,0 +1,108 @@
+# Default values for chirpstack.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+chirpstack:
+  name: chirpstack
+  replicaCount: 1
+
+  command: ["chirpstack", "-c", "/etc/chirpstack"]
+  args: []
+
+  logLevel: info
+  apiSecret: "you-must-replace-me"
+
+  extraEnvs: []
+    # - name: MY_VAR
+    #   value: myValue
+
+  image:
+    repository: chirpstack/chirpstack
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+
+  postgres:
+    user: postgres
+    password: postgres
+    host: localhost
+    database: chirpstack
+    sslMode: disable
+
+  redis:
+    servers:
+      - redis://localhost/
+
+    tlsEnabled: false
+    cluster: false
+
+  regions:
+    eu868:
+      mqtt:
+        host: localhost
+        port: 1883
+
+        eventTopic: eu868/gateway/+/event/+
+        commandTopic: eu868/gateway/{{ gateway_id }}/command/{{ command }}
+
+  network:
+    netId: "000000"
+    enabledRegions:
+      - eu868
+
+  service:
+    type: ClusterIP
+    port: 8080
+
+  entrypoints:
+    http:
+      port: 8080
+      targetPort: 8080
+    metrics:
+      enabled: true
+      port: 8081
+      targetPort: 8081
+
+  ingress:
+    enabled: false
+    className: ""
+    annotations: {}
+    hosts:
+      # - chirpstack.example.com
+    tls: []
+      # - secretName: my-certificate
+      #   hosts:
+      #     - chirpstack.example.com
+
+  podAnnotations: {}
+
+  podSecurityContext: {}
+    # fsGroup: 2000
+
+  securityContext: {}
+    # capabilities:
+    #   drop:
+    #   - ALL
+    # readOnlyRootFilesystem: true
+    # runAsNonRoot: true
+    # runAsUser: 1000
+
+  resources: {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}

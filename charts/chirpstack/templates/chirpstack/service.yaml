@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "chirpstack.core" . }}
+  labels:
+    {{- include "chirpstack.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+    - port: {{ .Values.chirpstack.entrypoints.http.port }}
+      targetPort: {{ .Values.chirpstack.entrypoints.http.targetPort }}
+      protocol: TCP
+      name: http
+
+    {{- if .Values.chirpstack.entrypoints.metrics.enabled }}
+    - port: {{ .Values.chirpstack.entrypoints.metrics.port }}
+      targetPort: {{ .Values.chirpstack.entrypoints.metrics.targetPort }}
+      protocol: TCP
+      name: metrics
+    {{ end }}
+  selector:
+    {{- include "chirpstack.selectorLabels" . | nindent 4 }}
