@@ -16,10 +16,10 @@ spec:
         {{- with .Values.chirpstack.podAnnotations }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
-        {{- if .Values.chirpstack.entrypoints.metrics.enabled }}
+        {{- if .Values.chirpstack.metrics.enabled }}
         prometheus.io/scrape: "true"
         prometheus.io/path: "/metrics"
-        prometheus.io/port: "{{ .Values.chirpstack.entrypoints.metrics.port }}"
+        prometheus.io/port: "{{ .Values.chirpstack.metrics.port }}"
         {{- end }}
       labels:
         {{- include "chirpstack.selectorLabels" . | nindent 8 }}
@@ -30,11 +30,11 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       securityContext:
-        {{- toYaml .Values.securityContext | nindent 8 }}
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ .Values.chirpstack.name }}
           securityContext:
-            {{- toYaml .Values.chirpstack.containerSecurityContext | nindent 12 }}
+            {{- toYaml .Values.chirpstack.securityContext | nindent 12 }}
           image: "{{ .Values.chirpstack.image.repository }}:{{ .Values.chirpstack.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.imagePullPolicy }}
           env:
@@ -50,12 +50,12 @@ spec:
             - name: http
               containerPort: {{ .Values.chirpstack.entrypoints.http.port }}
               protocol: TCP
-            {{- if .Values.chirpstack.entrypoints.metrics.enabled }}
+            {{- if .Values.chirpstack.metrics.enabled }}
             - name: metrics
-              containerPort: {{ .Values.chirpstack.entrypoints.metrics.port }}
+              containerPort: {{ .Values.chirpstack.metrics.port }}
               protocol: TCP
             {{ end }}
-          {{- if .Values.chirpstack.entrypoints.metrics.enabled }}
+          {{- if .Values.chirpstack.metrics.enabled }}
           livenessProbe:
             httpGet:
               path: /health

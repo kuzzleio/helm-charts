@@ -43,9 +43,9 @@ data:
       secret="{{ .Values.chirpstack.apiSecret }}"
 
 
-    {{- if .Values.chirpstack.entrypoints.metrics.enabled }}
+    {{- if .Values.chirpstack.metrics.enabled }}
     [monitoring]
-      bind="0.0.0.0:{{ .Values.chirpstack.entrypoints.metrics.port }}"
+      bind="0.0.0.0:{{ .Values.chirpstack.metrics.port }}"
     {{ end }}
 
   eu868.toml: |

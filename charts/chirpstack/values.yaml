@@ -54,18 +54,14 @@ chirpstack:
     enabledRegions:
       - eu868
 
-  service:
-    type: ClusterIP
-    port: 8080
-
   entrypoints:
     http:
       port: 8080
       targetPort: 8080
-    metrics:
-      enabled: true
-      port: 8081
-      targetPort: 8081
+
+  metrics:
+    enabled: true
+    port: 8081
 
   ingress:
     enabled: false

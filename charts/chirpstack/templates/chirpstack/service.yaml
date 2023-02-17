@@ -12,9 +12,9 @@ spec:
       protocol: TCP
       name: http
 
-    {{- if .Values.chirpstack.entrypoints.metrics.enabled }}
-    - port: {{ .Values.chirpstack.entrypoints.metrics.port }}
-      targetPort: {{ .Values.chirpstack.entrypoints.metrics.targetPort }}
+    {{- if .Values.chirpstack.metrics.enabled }}
+    - port: {{ .Values.chirpstack.metrics.port }}
+      targetPort: {{ .Values.chirpstack.metrics.port }}
       protocol: TCP
       name: metrics
     {{ end }}
