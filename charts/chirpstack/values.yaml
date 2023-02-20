@@ -10,8 +10,8 @@ chirpstack:
   name: chirpstack
   replicaCount: 1
 
-  command: ["chirpstack", "-c", "/etc/chirpstack"]
-  args: []
+  command: []
+  args: ["--config", "/etc/chirpstack"]
 
   logLevel: info
   apiSecret: "you-must-replace-me"
@@ -68,7 +68,10 @@ chirpstack:
     className: ""
     annotations: {}
     hosts:
-      # - chirpstack.example.com
+      # - host: chirpstack.example.com
+      #   paths:
+      #     - path: /
+      #       pathType: Prefix
     tls: []
       # - secretName: my-certificate
       #   hosts:
