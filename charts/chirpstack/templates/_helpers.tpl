@@ -28,6 +28,10 @@ If release name contains chart name it will be used as a full name.
 {{- printf "%s-core" (include "chirpstack.fullname" .) -}}
 {{- end -}}
 
+{{- define "chirpstack.restApi" -}}
+{{- printf "%s-rest-api" (include "chirpstack.fullname" .) -}}
+{{- end -}}
+
 {{/*
 Create chart name and version as used by the chart label.
 */}}

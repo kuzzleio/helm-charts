@@ -1,0 +1,18 @@
+{{- if .Values.chirpstackRestApi.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "chirpstack.restApi" . }}
+  labels:
+    {{- include "chirpstack.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+    - port: {{ .Values.chirpstackRestApi.http.port }}
+      targetPort: {{ .Values.chirpstackRestApi.http.targetPort }}
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "chirpstack.selectorLabels" . | nindent 4 }}
+    component: restApi
+{{- end }}

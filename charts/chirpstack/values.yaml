@@ -102,3 +102,72 @@ chirpstack:
   nodeSelector: {}
   tolerations: []
   affinity: {}
+
+chirpstackRestApi:
+  enabled: true
+
+  name: chirpstack-rest-api
+  replicaCount: 1
+
+  command: []
+  args: []
+
+  extraEnvs: []
+    # - name: MY_VAR
+    #   value: myValue
+
+  image:
+    repository: chirpstack/chirpstack-rest-api
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+
+  http:
+    insecure: true
+    cors: "0.0.0.0"
+
+    port: 8090
+    targetPort: 8090
+
+  ingress:
+    enabled: false
+    className: ""
+    annotations: {}
+    hosts:
+      # - host: chirpstack-api.example.com
+      #   paths:
+      #     - path: /
+      #       pathType: Prefix
+    tls: []
+      # - secretName: my-certificate
+      #   hosts:
+      #     - chirpstack.example.com
+
+  podAnnotations: {}
+
+  podSecurityContext: {}
+    # fsGroup: 2000
+
+  securityContext: {}
+    # capabilities:
+    #   drop:
+    #   - ALL
+    # readOnlyRootFilesystem: true
+    # runAsNonRoot: true
+    # runAsUser: 1000
+
+  resources: {}
+    # We usually recommend not to specify default resources and to leave this as a conscious
+    # choice for the user. This also increases chances charts run on environments with little
+    # resources, such as Minikube. If you do want to specify resources, uncomment the following
+    # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
