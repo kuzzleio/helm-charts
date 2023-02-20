@@ -61,4 +61,4 @@ data:
           event_topic="{{ .Values.chirpstack.regions.eu868.mqtt.eventTopic }}"
           command_topic="{{ .Values.chirpstack.regions.eu868.mqtt.commandTopic }}"
 
-          server="tcp://{{ .Values.chirpstack.regions.eu868.mqtt.host }}:{{ .Values.chirpstack.regions.eu868.mqtt.port }}"
+          server="tcp://{{ .Values.chirpstack.regions.eu868.mqtt.host | default .Values.chirpstack.regions.mqtt.host }}:{{ .Values.chirpstack.regions.eu868.mqtt.port | default .Values.chirpstack.regions.mqtt.port }}"

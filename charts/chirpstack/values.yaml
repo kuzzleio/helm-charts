@@ -41,10 +41,15 @@ chirpstack:
     cluster: false
 
   regions:
+    mqtt:
+      host: localhost
+      port: 1883
+
     eu868:
       mqtt:
-        host: localhost
-        port: 1883
+        # Overrides for the global MQTT host definition
+        # host: localhost
+        # port: 1883
 
         eventTopic: eu868/gateway/+/event/+
         commandTopic: eu868/gateway/{{ gateway_id }}/command/{{ command }}
