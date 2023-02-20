@@ -39,7 +39,7 @@ data:
 
 
     [api]
-      bind="0.0.0.0:{{ .Values.chirpstack.entrypoints.http.port }}"
+      bind="0.0.0.0:{{ .Values.chirpstack.http.port }}"
       secret="{{ .Values.chirpstack.apiSecret }}"
 
 

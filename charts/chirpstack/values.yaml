@@ -54,10 +54,9 @@ chirpstack:
     enabledRegions:
       - eu868
 
-  entrypoints:
-    http:
-      port: 8080
-      targetPort: 8080
+  http:
+    port: 8080
+    targetPort: 8080
 
   metrics:
     enabled: true

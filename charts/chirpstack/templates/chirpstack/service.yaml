@@ -7,8 +7,8 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-    - port: {{ .Values.chirpstack.entrypoints.http.port }}
-      targetPort: {{ .Values.chirpstack.entrypoints.http.targetPort }}
+    - port: {{ .Values.chirpstack.http.port }}
+      targetPort: {{ .Values.chirpstack.http.targetPort }}
       protocol: TCP
       name: http
 

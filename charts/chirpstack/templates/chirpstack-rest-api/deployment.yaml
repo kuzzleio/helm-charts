@@ -35,7 +35,7 @@ spec:
           imagePullPolicy: {{ .Values.imagePullPolicy }}
           env:
             - name: SERVER
-              value: "{{ include "chirpstack.core" . }}:{{ .Values.chirpstack.entrypoints.http.port }}"
+              value: "{{ include "chirpstack.core" . }}:{{ .Values.chirpstack.http.port }}"
             - name: BIND
               value: "0.0.0.0:{{ .Values.chirpstackRestApi.http.port }}"
             - name: CORS

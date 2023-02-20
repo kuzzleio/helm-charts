@@ -48,7 +48,7 @@ spec:
               mountPath: /etc/chirpstack
           ports:
             - name: http
-              containerPort: {{ .Values.chirpstack.entrypoints.http.port }}
+              containerPort: {{ .Values.chirpstack.http.port }}
               protocol: TCP
             {{- if .Values.chirpstack.metrics.enabled }}
             - name: metrics

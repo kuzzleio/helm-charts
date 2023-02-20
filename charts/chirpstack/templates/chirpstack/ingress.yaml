@@ -1,6 +1,6 @@
 {{- if .Values.chirpstack.ingress.enabled -}}
 {{- $fullName := include "chirpstack.core" . -}}
-{{- $svcPort := .Values.chirpstack.entrypoints.http.port -}}
+{{- $svcPort := .Values.chirpstack.http.port -}}
 {{- if and .Values.chirpstack.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
   {{- if not (hasKey .Values.chirpstack.ingress.annotations "kubernetes.io/ingress.class") }}
   {{- $_ := set .Values.chirpstack.ingress.annotations "kubernetes.io/ingress.class" .Values.chirpstack.ingress.className}}
