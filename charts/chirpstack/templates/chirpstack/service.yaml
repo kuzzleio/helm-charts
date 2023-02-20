@@ -8,13 +8,13 @@ spec:
   type: ClusterIP
   ports:
     - port: {{ .Values.chirpstack.http.port }}
-      targetPort: {{ .Values.chirpstack.http.targetPort }}
+      targetPort: dashboard
       protocol: TCP
-      name: http
+      name: dashboard
 
     {{- if .Values.chirpstack.metrics.enabled }}
     - port: {{ .Values.chirpstack.metrics.port }}
-      targetPort: {{ .Values.chirpstack.metrics.port }}
+      targetPort: metrics
       protocol: TCP
       name: metrics
     {{ end }}

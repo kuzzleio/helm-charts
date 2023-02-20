@@ -47,7 +47,7 @@ spec:
             - name: config
               mountPath: /etc/chirpstack
           ports:
-            - name: http
+            - name: dashboard
               containerPort: {{ .Values.chirpstack.http.port }}
               protocol: TCP
             {{- if .Values.chirpstack.metrics.enabled }}
@@ -68,11 +68,11 @@ spec:
           livenessProbe:
             httpGet:
               path: /
-              port: http
+              port: dashboard
           readinessProbe:
             httpGet:
               path: /
-              port: http
+              port: dashboard
           {{ end }}
           resources:
             {{- toYaml .Values.chirpstack.resources | nindent 12 }}

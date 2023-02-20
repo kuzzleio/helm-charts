@@ -51,17 +51,17 @@ spec:
           args:
             {{- toYaml .Values.chirpstackRestApi.args | nindent 12 }}
           ports:
-            - name: http
+            - name: api
               containerPort: {{ .Values.chirpstackRestApi.http.port }}
               protocol: TCP
           livenessProbe:
             httpGet:
               path: /
-              port: http
+              port: api
           readinessProbe:
             httpGet:
               path: /
-              port: http
+              port: api
           resources:
             {{- toYaml .Values.chirpstackRestApi.resources | nindent 12 }}
       {{- with .Values.chirpstackRestApi.nodeSelector }}
