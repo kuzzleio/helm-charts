@@ -55,16 +55,6 @@ spec:
               containerPort: {{ .Values.chirpstack.metrics.port }}
               protocol: TCP
             {{ end }}
-          {{- if .Values.chirpstack.metrics.enabled }}
-          livenessProbe:
-            httpGet:
-              path: /health
-              port: metrics
-          readinessProbe:
-            httpGet:
-              path: /health
-              port: metrics
-          {{- else }}
           livenessProbe:
             httpGet:
               path: /
@@ -73,7 +63,6 @@ spec:
             httpGet:
               path: /
               port: dashboard
-          {{ end }}
           resources:
             {{- toYaml .Values.chirpstack.resources | nindent 12 }}
       volumes:
