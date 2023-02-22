@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "chirpstack.core" . }}
+  name: {{ include "chirpstack.core" . }}
   labels:
     {{- include "chirpstack.labels" . | nindent 4 }}
 data:
