@@ -61,7 +61,7 @@ chirpstack:
 
   http:
     port: 8080
-    targetPort: 8080
+    containerPort: 8080
 
   metrics:
     enabled: true
@@ -134,7 +134,7 @@ chirpstackRestApi:
     cors: "0.0.0.0"
 
     port: 8090
-    targetPort: 8090
+    containerPort: 8090
 
   ingress:
     enabled: false

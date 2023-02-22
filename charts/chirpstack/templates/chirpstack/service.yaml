@@ -8,7 +8,7 @@ spec:
   type: ClusterIP
   ports:
     - port: {{ .Values.chirpstack.http.port }}
-      targetPort: dashboard
+      targetPort: {{ .Values.chirpstack.http.containerPort }}
       protocol: TCP
       name: dashboard
   selector:

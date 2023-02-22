@@ -37,7 +37,7 @@ spec:
             - name: SERVER
               value: "{{ include "chirpstack.core" . }}:{{ .Values.chirpstack.http.port }}"
             - name: BIND
-              value: "0.0.0.0:{{ .Values.chirpstackRestApi.http.port }}"
+              value: "0.0.0.0:{{ .Values.chirpstackRestApi.http.containerPort }}"
             - name: CORS
               value: "{{ .Values.chirpstackRestApi.http.cors }}"
             {{- if .Values.chirpstackRestApi.http.insecure }}
@@ -52,7 +52,7 @@ spec:
             {{- toYaml .Values.chirpstackRestApi.args | nindent 12 }}
           ports:
             - name: api
-              containerPort: {{ .Values.chirpstackRestApi.http.port }}
+              containerPort: {{ .Values.chirpstackRestApi.http.containerPort }}
               protocol: TCP
           livenessProbe:
             httpGet:
