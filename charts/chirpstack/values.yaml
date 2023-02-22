@@ -1,72 +1,110 @@
-# Default values for chirpstack.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
+# Default values for ChirpStack.
 
+# Global Docker registry secret names as an array
 imagePullSecrets: []
+
+# Overrides for the name and full name of the chart
 nameOverride: ""
 fullnameOverride: ""
 
+# Configuration values for the ChirpStack LNS
 chirpstack:
+  # Name and replica count of the ChirpStack core app
   name: chirpstack
   replicaCount: 1
 
+  # Overrides for the default container command and args
   command: []
   args: ["--config", "/etc/chirpstack"]
 
+  # Log level of ChirpStack (must be either "trace", "debug", "info", "warn" or "error")
   logLevel: info
+
+  # Secret used for generating login and API tokens
+  # Replace it with e.g. the output of "openssl rand -base64 32"
   apiSecret: "you-must-replace-me"
 
+  # Extra environment variables to set in the containers
   extraEnvs: []
     # - name: MY_VAR
     #   value: myValue
 
+  # Overrides for the image being pulled from the Docker registry
   image:
     repository: chirpstack/chirpstack
     pullPolicy: IfNotPresent
-    # Overrides the image tag whose default is the chart appVersion.
     tag: ""
 
+  # Configuration for connecting to the PostgreSQL database
   postgres:
+    # PostgreSQL user credentials
     user: postgres
     password: postgres
+
+    # Hostname of the database server
     host: localhost
+
+    # Name of the database to use for ChirpStack
     database: chirpstack
+
+    # SSL mode options:
+    #  * disable - no SSL
+    #  * require - Always SSL (skip verification)
+    #  * verify-ca - Always SSL (verify that the certificate presented by the server was signed by a trusted CA)
+    #  * verify-full - Always SSL (verify that the certification presented by the server was signed by a trusted CA and the server host name matches the one in the certificate)
     sslMode: disable
 
+  # Configuration for connecting to the Redis
   redis:
+    # Hostnames of the Redis servers (set multiple hostnames when connecting to a cluster)
     servers:
       - redis://localhost/
 
+    # Whether to connect to Redis with TLS
     tlsEnabled: false
+
+    # Whether the hostnames are a Redis Cluster instance
     cluster: false
 
+  # Configuration for the LoRa regions
   regions:
+    # Global MQTT gateway backend configuration
     mqtt:
+      # Hostname and port of the MQTT broker where the LoRaWAN gateways are connected
       host: localhost
       port: 1883
 
+    # Configuration for the EU868 region
     eu868:
       mqtt:
-        # Overrides for the global MQTT host definition
+        # Overrides for the global MQTT hostname and port
         # host: localhost
         # port: 1883
 
+        # Event and command topics
         eventTopic: eu868/gateway/+/event/+
         commandTopic: eu868/gateway/{{ gateway_id }}/command/{{ command }}
 
+  # LNS network configuration
   network:
+    # 3 bytes network identifier encoded as hex
     netId: "000000"
+
+    # LoRa regions enabled on this instance
     enabledRegions:
       - eu868
 
+  # Configuration of the ChirpStack dashboard server
   http:
     port: 8080
     containerPort: 8080
 
+  # Configuration of the ChirpStack metrics server
   metrics:
     enabled: true
     port: 8081
 
+  # Extra config files that are mounted in the configuration directory
   extraConfigFiles: {}
     # kafka.toml: |
     #   [integration]
@@ -76,6 +114,7 @@ chirpstack:
     #       brokers=["localhost:9092"]
     #       topic="chirpstack"
 
+  # Configuration of the ingress to the dashboard
   ingress:
     enabled: false
     className: ""
@@ -90,6 +129,7 @@ chirpstack:
       #   hosts:
       #     - chirpstack.example.com
 
+  # Configuration of the main ChirpStack service
   service:
     type: ClusterIP
     annotations: {}
@@ -124,32 +164,42 @@ chirpstack:
   tolerations: []
   affinity: {}
 
+# Configuration values for the ChirpStack REST API bridge
 chirpstackRestApi:
+  # Whether the REST API service is deployed
   enabled: true
 
+  # Name and replica count of the ChirpStack REST API app
   name: chirpstack-rest-api
   replicaCount: 1
 
+  # Overrides for the default container command and args
   command: []
   args: []
 
+  # Extra environment variables to set in the containers
   extraEnvs: []
     # - name: MY_VAR
     #   value: myValue
 
+  # Overrides for the image being pulled from the Docker registry
   image:
     repository: chirpstack/chirpstack-rest-api
     pullPolicy: IfNotPresent
-    # Overrides the image tag whose default is the chart appVersion.
     tag: ""
 
+  # Configuration of the ChirpStack REST API server
   http:
+    # Indicates that the gRPC interface is not secured using a TLS certificate
     insecure: true
+
+    # CORS AllowedOrigins header value
     cors: "0.0.0.0"
 
     port: 8090
     containerPort: 8090
 
+  # Configuration of the ingress to the dashboard
   ingress:
     enabled: false
     className: ""
@@ -164,6 +214,7 @@ chirpstackRestApi:
       #   hosts:
       #     - chirpstack.example.com
 
+  # Configuration of the main ChirpStack service
   service:
     type: ClusterIP
     annotations: {}

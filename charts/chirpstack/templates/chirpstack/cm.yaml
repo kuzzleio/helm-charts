@@ -5,6 +5,7 @@ metadata:
   labels:
     {{- include "chirpstack.labels" . | nindent 4 }}
 data:
+  # https://www.chirpstack.io/docs/chirpstack/configuration.html#example-chirpstacktoml-configuration
   chirpstack.toml: |
     [logging]
       level="{{ .Values.chirpstack.logLevel }}"
@@ -48,6 +49,7 @@ data:
       bind="0.0.0.0:{{ .Values.chirpstack.metrics.port }}"
     {{ end }}
 
+  # https://www.chirpstack.io/docs/chirpstack/configuration.html#example-region_eu868toml-configuration
   eu868.toml: |
     [[regions]]
     name="eu868"
