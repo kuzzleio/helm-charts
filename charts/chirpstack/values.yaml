@@ -67,6 +67,15 @@ chirpstack:
     enabled: true
     port: 8081
 
+  extraConfigFiles: {}
+    # kafka.toml: |
+    #   [integration]
+    #     enabled=["kafka"]
+    #
+    #     [integration.kafka]
+    #       brokers=["localhost:9092"]
+    #       topic="chirpstack"
+
   ingress:
     enabled: false
     className: ""
