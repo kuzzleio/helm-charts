@@ -4,8 +4,15 @@ metadata:
   name: {{ include "chirpstack.core" . }}
   labels:
     {{- include "chirpstack.labels" . | nindent 4 }}
+  {{- with .Values.chirpstack.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
-  type: ClusterIP
+  type: {{ .Values.chirpstack.service.type }}
+  {{- with .Values.chirpstack.service.spec }}
+  {{- toYaml . | nindent 2 }}
+  {{- end }}
   ports:
     - port: {{ .Values.chirpstack.http.port }}
       targetPort: {{ .Values.chirpstack.http.containerPort }}

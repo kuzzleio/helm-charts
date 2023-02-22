@@ -90,6 +90,11 @@ chirpstack:
       #   hosts:
       #     - chirpstack.example.com
 
+  service:
+    type: ClusterIP
+    annotations: {}
+    spec: {}
+
   podAnnotations: {}
 
   podSecurityContext: {}
@@ -158,6 +163,11 @@ chirpstackRestApi:
       # - secretName: my-certificate
       #   hosts:
       #     - chirpstack.example.com
+
+  service:
+    type: ClusterIP
+    annotations: {}
+    spec: {}
 
   podAnnotations: {}
 
