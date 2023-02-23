@@ -1,0 +1,70 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "chirpstack.core" . }}
+  labels:
+    {{- include "chirpstack.labels" . | nindent 4 }}
+data:
+  # https://www.chirpstack.io/docs/chirpstack/configuration.html#example-chirpstacktoml-configuration
+  chirpstack.toml: |
+    [logging]
+      level="{{ .Values.chirpstack.logLevel }}"
+
+
+    [postgresql]
+      dsn="postgres://{{ .Values.chirpstack.postgres.user }}:{{ .Values.chirpstack.postgres.password }}@{{ .Values.chirpstack.postgres.host }}/{{ .Values.chirpstack.postgres.database }}?sslmode={{ .Values.chirpstack.postgres.sslMode }}"
+
+      max_open_connections=10
+      min_idle_connections=0
+
+
+    [redis]
+      servers=[
+        {{- range .Values.chirpstack.redis.servers }}
+        "{{ . }}",
+        {{- end }}
+      ]
+
+      tls_enabled={{ .Values.chirpstack.redis.tlsEnabled }}
+      cluster={{ .Values.chirpstack.redis.cluster }}
+
+
+    [network]
+      net_id="{{ .Values.chirpstack.network.netId }}"
+
+      enabled_regions=[
+        {{- range .Values.chirpstack.network.enabledRegions }}
+        "{{ . }}",
+        {{- end }}
+      ]
+
+
+    [api]
+      bind="0.0.0.0:{{ .Values.chirpstack.http.containerPort }}"
+      secret="{{ .Values.chirpstack.apiSecret }}"
+
+
+    {{- if .Values.chirpstack.metrics.enabled }}
+    [monitoring]
+      bind="0.0.0.0:{{ .Values.chirpstack.metrics.port }}"
+    {{ end }}
+
+  # https://www.chirpstack.io/docs/chirpstack/configuration.html#example-region_eu868toml-configuration
+  eu868.toml: |
+    [[regions]]
+    name="eu868"
+    common_name="EU868"
+
+    [regions.gateway]
+      [regions.gateway.backend]
+        enabled="mqtt"
+
+        [regions.gateway.backend.mqtt]
+          event_topic="{{ .Values.chirpstack.regions.eu868.mqtt.eventTopic }}"
+          command_topic="{{ .Values.chirpstack.regions.eu868.mqtt.commandTopic }}"
+
+          server="tcp://{{ .Values.chirpstack.regions.eu868.mqtt.host | default .Values.chirpstack.regions.mqtt.host }}:{{ .Values.chirpstack.regions.eu868.mqtt.port | default .Values.chirpstack.regions.mqtt.port }}"
+
+  {{- range $key, $value := .Values.chirpstack.extraConfigFiles }}
+  {{ $key | nindent 2 }}: | {{ $value | nindent 4 }}
+  {{- end }}

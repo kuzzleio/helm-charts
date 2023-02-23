@@ -1,0 +1,79 @@
+{{- if .Values.chirpstackRestApi.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "chirpstack.restApi" . }}
+  labels:
+    {{- include "chirpstack.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.chirpstackRestApi.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "chirpstack.selectorLabels" . | nindent 6 }}
+      component: restApi
+  template:
+    metadata:
+      annotations:
+        {{- with .Values.chirpstackRestApi.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "chirpstack.selectorLabels" . | nindent 8 }}
+        component: restApi
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Values.chirpstackRestApi.name }}
+          securityContext:
+            {{- toYaml .Values.chirpstackRestApi.securityContext | nindent 12 }}
+          image: "{{ .Values.chirpstackRestApi.image.repository }}:{{ .Values.chirpstackRestApi.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
+          env:
+            - name: SERVER
+              value: "{{ include "chirpstack.core" . }}:{{ .Values.chirpstack.http.port }}"
+            - name: BIND
+              value: "0.0.0.0:{{ .Values.chirpstackRestApi.http.containerPort }}"
+            - name: CORS
+              value: "{{ .Values.chirpstackRestApi.http.cors }}"
+            {{- if .Values.chirpstackRestApi.http.insecure }}
+            - name: INSECURE
+            {{- end }}
+            {{- with .Values.chirpstackRestApi.extraEnvs }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+          command:
+            {{- toYaml .Values.chirpstackRestApi.command | nindent 12 }}
+          args:
+            {{- toYaml .Values.chirpstackRestApi.args | nindent 12 }}
+          ports:
+            - name: api
+              containerPort: {{ .Values.chirpstackRestApi.http.containerPort }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: api
+          readinessProbe:
+            httpGet:
+              path: /
+              port: api
+          resources:
+            {{- toYaml .Values.chirpstackRestApi.resources | nindent 12 }}
+      {{- with .Values.chirpstackRestApi.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.chirpstackRestApi.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.chirpstackRestApi.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}
