@@ -34,7 +34,7 @@ spec:
     {{- end }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
-      
+
       # Init containers
       {{ if .Values.extraInitContainers }}
       initContainers:
@@ -46,34 +46,34 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          env: 
-            {{- toYaml .Values.extraEnvs | nindent 12 }} 
-          command: 
+          env:
+            {{- toYaml .Values.extraEnvs | nindent 12 }}
+          command:
             {{- toYaml .Values.command | nindent 12 }}
-          args: 
+          args:
             {{- toYaml .Values.args | nindent 12 }}
           ports:
             - name: kuzzle-api
-              containerPort: {{ .Values.entrypoints.http.port }}
+              containerPort: {{ .Values.entrypoints.http.targetPort }}
               protocol: TCP
             - name: cluster-command
-              containerPort: {{ .Values.entrypoints.cluster_command.port }}
+              containerPort: {{ .Values.entrypoints.cluster_command.targetPort }}
               protocol: TCP
             - name: cluster-sync
-              containerPort: {{ .Values.entrypoints.cluster_sync.port }}
+              containerPort: {{ .Values.entrypoints.cluster_sync.targetPort }}
               protocol: TCP
           {{- range .Values.extraEntrypoints }}
             - name: {{ .name }}
-              containerPort: {{ .port }}
+              containerPort: {{ .targetPort }}
               protocol: {{ .protocol }}
           {{- end }}
         {{- with .Values.probes.liveness }}
           livenessProbe:
-            {{- toYaml . | nindent 12 }} 
+            {{- toYaml . | nindent 12 }}
         {{- end }}
         {{- with .Values.probes.readiness }}
           readinessProbe:
-            {{- toYaml . | nindent 12 }} 
+            {{- toYaml . | nindent 12 }}
         {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
