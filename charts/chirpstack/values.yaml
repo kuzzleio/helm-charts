@@ -101,7 +101,7 @@ chirpstack:
 
   # Configuration of the ChirpStack metrics server
   metrics:
-    enabled: true
+    enabled: false
     port: 8081
 
   # Extra config files that are mounted in the configuration directory
@@ -167,7 +167,7 @@ chirpstack:
 # Configuration values for the ChirpStack REST API bridge
 chirpstackRestApi:
   # Whether the REST API service is deployed
-  enabled: true
+  enabled: false
 
   # Name and replica count of the ChirpStack REST API app
   name: chirpstack-rest-api
