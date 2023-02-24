@@ -64,8 +64,6 @@ elasticsearch:
         storage: "15Gi"
 
 redis:
-  architecture: replication
-
   auth:
     enabled: false
 
