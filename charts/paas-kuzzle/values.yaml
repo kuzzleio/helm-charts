@@ -39,7 +39,6 @@ elasticsearch:
   imageTag: 7.10.2
   minimumMasterNodes: 1
 
-
   roles:
     master: "true"
     ingest: "true"
@@ -65,24 +64,38 @@ elasticsearch:
         storage: "15Gi"
 
 redis:
-  usePassword: false
+  auth:
+    enabled: false
+
   master:
     persistence:
       enabled: true
       size: "10Gi"
-  slave:
+
+    resources:
+      requests:
+        cpu: "300m"
+        memory: "150Mi"
+
+      limits:
+        cpu: "600m"
+        memory: "250Mi"
+
+  replica:
+    replicaCount: 1
+
     persistence:
       enabled: true
       size: "10Gi"
-  cluster:
-    enabled: true
-    slaveCount: 1
+
+    resources:
+      requests:
+        cpu: "300m"
+        memory: "150Mi"
+
+      limits:
+        cpu: "600m"
+        memory: "250Mi"
+
   metrics:
     enabled: true
-  resources:
-    requests:
-      cpu: "300m"
-      memory: "150Mi"
-    limits:
-      cpu: "600m"
-      memory: "250Mi"
