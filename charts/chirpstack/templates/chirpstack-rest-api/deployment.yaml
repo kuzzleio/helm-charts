@@ -10,7 +10,7 @@ spec:
   selector:
     matchLabels:
       {{- include "chirpstack.selectorLabels" . | nindent 6 }}
-      component: restApi
+      app.kubernetes.io/component: restApi
   template:
     metadata:
       annotations:
@@ -19,7 +19,7 @@ spec:
         {{- end }}
       labels:
         {{- include "chirpstack.selectorLabels" . | nindent 8 }}
-        component: restApi
+        app.kubernetes.io/component: restApi
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:

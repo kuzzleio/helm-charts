@@ -9,7 +9,7 @@ spec:
   selector:
     matchLabels:
       {{- include "chirpstack.selectorLabels" . | nindent 6 }}
-      component: core
+      app.kubernetes.io/component: core
   template:
     metadata:
       annotations:
@@ -23,7 +23,7 @@ spec:
         {{- end }}
       labels:
         {{- include "chirpstack.selectorLabels" . | nindent 8 }}
-        component: core
+        app.kubernetes.io/component: core
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:

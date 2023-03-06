@@ -20,4 +20,4 @@ spec:
       name: dashboard
   selector:
     {{- include "chirpstack.selectorLabels" . | nindent 4 }}
-    component: core
+    app.kubernetes.io/component: core
