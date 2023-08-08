@@ -33,7 +33,7 @@ chirpstack:
   image:
     repository: chirpstack/chirpstack
     pullPolicy: IfNotPresent
-    tag: ""
+    tag: 4.4
 
   # Configuration for connecting to the PostgreSQL database
   postgres:

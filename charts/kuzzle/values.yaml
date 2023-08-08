@@ -64,16 +64,16 @@ extraEntrypoints:
 probes:
   liveness:
     httpGet:
-      path: /_publicApi
+      path: /_healthcheck
       port: kuzzle-api
   readiness:
     httpGet:
-      path: /_publicApi
+      path: /_healthcheck
       port: kuzzle-api
 
 metrics:
   port: 7512
-  path: "/_/prometheus/metrics"
+  path: "/_/metrics"
 
 securityContext:
   {}
