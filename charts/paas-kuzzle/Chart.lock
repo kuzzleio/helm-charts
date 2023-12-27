@@ -4,9 +4,9 @@ dependencies:
   version: 1.1.0
 - name: elasticsearch
   repository: https://helm.elastic.co/
-  version: 7.13.3
+  version: 7.17.3
 - name: redis
   repository: https://charts.bitnami.com/bitnami/
   version: 16.12.2
-digest: sha256:7b6f91d4bbdaf8fb8d7b8974f8674edae16a82206181fa5101a7178af17c2012
-generated: "2023-12-27T10:02:11.093399+01:00"
+digest: sha256:5d2da766a3874d394961f9d79e1479bec531ab9e1350dbb003bdbd05f1ceb2e3
+generated: "2023-12-27T18:27:17.507499+01:00"
