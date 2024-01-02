@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   name: kuzzleio/kuzzle
-  tag: 2
+  tag: ""
   pullPolicy: Always
 
 imagePullSecrets: []
