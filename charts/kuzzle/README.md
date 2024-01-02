@@ -1,6 +1,6 @@
 # kuzzle
 
-![Version: 1.1.1](https://img.shields.io/badge/Version-1.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.25.0](https://img.shields.io/badge/AppVersion-2.25.0-informational?style=flat-square)
+![Version: 1.2.0](https://img.shields.io/badge/Version-1.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.28.0](https://img.shields.io/badge/AppVersion-2.28.0-informational?style=flat-square)
 
 Kuzzle Kubernetes Chart
 
@@ -38,7 +38,7 @@ Kuzzle Kubernetes Chart
 | fullnameOverride                            | string | `""`                                             |             |
 | image.name                                  | string | `"kuzzleio/kuzzle"`                              |             |
 | image.pullPolicy                            | string | `"Always"`                                       |             |
-| image.tag                                   | int    | `2`                                              |             |
+| image.tag                                   | string | `""`                                             |             |
 | imagePullSecrets                            | list   | `[]`                                             |             |
 | ingress.annotations                         | object | `{}`                                             |             |
 | ingress.className                           | string | `""`                                             |             |
