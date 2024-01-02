@@ -55,6 +55,16 @@ entries:
     version: 0.1.0
   kuzzle:
   - apiVersion: v2
+    appVersion: 2.28.0
+    created: "2024-01-02T14:50:55.943875218Z"
+    description: Kuzzle Kubernetes Chart
+    digest: 5253e94dc53d0d8eb7e286da754fddceba6c20cf5f1b6380dbf420937af95890
+    name: kuzzle
+    type: application
+    urls:
+    - https://github.com/kuzzleio/helm-charts/releases/download/kuzzle-1.2.0/kuzzle-1.2.0.tgz
+    version: 1.2.0
+  - apiVersion: v2
     appVersion: 2.25.0
     created: "2023-08-08T13:48:24.412826855Z"
     description: Kuzzle Kubernetes Chart
@@ -859,4 +869,4 @@ entries:
     urls:
     - https://github.com/kuzzleio/helm-charts/releases/download/webapp-0.1.0/webapp-0.1.0.tgz
     version: 0.1.0
-generated: "2023-12-27T17:28:24.306006951Z"
+generated: "2024-01-02T14:50:55.944099093Z"
