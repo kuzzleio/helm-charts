@@ -215,6 +215,26 @@ entries:
   paas-kuzzle:
   - apiVersion: v2
     appVersion: 2.28.0
+    created: "2024-01-02T15:00:50.631355328Z"
+    dependencies:
+    - name: kuzzle
+      repository: https://kuzzleio.github.io/helm-charts/
+      version: 1.2.0
+    - name: elasticsearch
+      repository: https://helm.elastic.co/
+      version: 7.17.3
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami/
+      version: 16.12.2
+    description: A Helm chart for Kubernetes
+    digest: 81de600c1075b706fdb88328aa369e7633b4e6ab6c8c2a9844c48ef6119a6e47
+    name: paas-kuzzle
+    type: application
+    urls:
+    - https://github.com/kuzzleio/helm-charts/releases/download/paas-kuzzle-2.4.0/paas-kuzzle-2.4.0.tgz
+    version: 2.4.0
+  - apiVersion: v2
+    appVersion: 2.28.0
     created: "2023-12-27T17:28:24.305843656Z"
     dependencies:
     - name: kuzzle
@@ -869,4 +889,4 @@ entries:
     urls:
     - https://github.com/kuzzleio/helm-charts/releases/download/webapp-0.1.0/webapp-0.1.0.tgz
     version: 0.1.0
-generated: "2024-01-02T14:50:55.944099093Z"
+generated: "2024-01-02T15:00:50.631518182Z"
