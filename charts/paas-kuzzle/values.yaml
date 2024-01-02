@@ -14,7 +14,7 @@ kuzzle:
 
   image:
     name: kuzzleio/kuzzle
-    tag: 2
+    tag: ""
     pullPolicy: Always
 
   imagePullSecrets:
