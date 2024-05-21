@@ -828,6 +828,17 @@ entries:
     urls:
     - https://github.com/kuzzleio/helm-charts/releases/download/paas-webapp-0.1.0/paas-webapp-0.1.0.tgz
     version: 0.1.0
+  qpack:
+  - apiVersion: v2
+    appVersion: 1.2.42
+    created: "2024-05-21T14:18:07.409785938Z"
+    description: A QPACK application
+    digest: 5358f1ba6a41401e6c7b17c00fca2d9eaddee4cd43ab02cde62089603707671f
+    name: qpack
+    type: application
+    urls:
+    - https://github.com/kuzzleio/helm-charts/releases/download/qpack-1.0.0/qpack-1.0.0.tgz
+    version: 1.0.0
   webapp:
   - apiVersion: v2
     appVersion: 1.25.1
@@ -899,4 +910,4 @@ entries:
     urls:
     - https://github.com/kuzzleio/helm-charts/releases/download/webapp-0.1.0/webapp-0.1.0.tgz
     version: 0.1.0
-generated: "2024-04-15T08:45:07.293525515Z"
+generated: "2024-05-21T14:18:07.410013904Z"
