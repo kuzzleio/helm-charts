@@ -26,6 +26,10 @@ Description of the chart available [here](charts/webapp/README.md)
 
 Description of the chart available [here](charts/chirpstack/README.md)
 
+### QPack chart
+
+Description of the chart available [here](charts/qpack/README.md)
+
 ## Contributing
 
 Please refer to the [contributing](CONTRIBUTING.md) file.
