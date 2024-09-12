@@ -1,6 +1,6 @@
 # paas-kuzzle
 
-![Version: 2.5.0](https://img.shields.io/badge/Version-2.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.28.0](https://img.shields.io/badge/AppVersion-2.28.0-informational?style=flat-square)
+![Version: 2.6.0](https://img.shields.io/badge/Version-2.6.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.29.1](https://img.shields.io/badge/AppVersion-2.29.1-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -10,7 +10,7 @@ A Helm chart for Kubernetes
 | --------------------------------------- | ------------- | ------- |
 | https://charts.bitnami.com/bitnami/     | redis         | 16.12.2 |
 | https://helm.elastic.co/                | elasticsearch | 7.17.3  |
-| https://kuzzleio.github.io/helm-charts/ | kuzzle        | 1.2.0   |
+| https://kuzzleio.github.io/helm-charts/ | kuzzle        | 1.3.0   |
 
 ## Values
 
@@ -35,7 +35,6 @@ A Helm chart for Kubernetes
 | elasticsearch.volumeClaimTemplate.storageClassName           | string | `"scw-bssd"`                                     |             |
 | ingress.enabled                                              | bool   | `false`                                          |             |
 | ingressTCP.enabled                                           | bool   | `false`                                          |             |
-| kuzzle.command                                               | string | `nil`                                            |             |
 | kuzzle.extraEnvs\[0\].name                                   | string | `"kuzzle_services__storageEngine__client__node"` |             |
 | kuzzle.extraEnvs\[0\].value                                  | string | `"http://elasticsearch-master:9200"`             |             |
 | kuzzle.extraEnvs\[1\].name                                   | string | `"kuzzle_services__internalCache__node__host"`   |             |
