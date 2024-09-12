@@ -10,8 +10,6 @@ certificate:
 kuzzle:
   replicaCount: 1
 
-  command: null
-
   image:
     name: kuzzleio/kuzzle
     tag: ""
