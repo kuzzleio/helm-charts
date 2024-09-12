@@ -61,3 +61,6 @@ ingress:
   # tls:
   #   enabled: true
   #   secretName: webapp
+
+ingressTCP:
+  enabled: false

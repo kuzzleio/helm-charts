@@ -1,6 +1,6 @@
 # paas-webapp
 
-![Version: 2.3.0](https://img.shields.io/badge/Version-2.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.26.0](https://img.shields.io/badge/AppVersion-1.26.0-informational?style=flat-square)
+![Version: 2.3.1](https://img.shields.io/badge/Version-2.3.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.26.0](https://img.shields.io/badge/AppVersion-1.26.0-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -16,6 +16,7 @@ A Helm chart for Kubernetes
 | --------------------------------- | ------ | ----------------- | ----------- |
 | certificate.enabled               | bool   | `false`           |             |
 | ingress.enabled                   | bool   | `false`           |             |
+| ingressTCP.enabled                | bool   | `false`           |             |
 | secret.enabled                    | bool   | `false`           |             |
 | webapp.image.name                 | string | `"nginx"`         |             |
 | webapp.image.pullPolicy           | string | `"Always"`        |             |
