@@ -1,6 +1,6 @@
 # paas-keycloak
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2](https://img.shields.io/badge/AppVersion-2-informational?style=flat-square)
+![Version: 1.1.0](https://img.shields.io/badge/Version-1.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 18.1.1](https://img.shields.io/badge/AppVersion-18.1.1-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -14,7 +14,7 @@ A Helm chart for Kubernetes
 
 | Key                                                          | Type   | Default                                                   | Description |
 | ------------------------------------------------------------ | ------ | --------------------------------------------------------- | ----------- |
-| certificate.dnsNames[0]                                      | string | `"webapp.test"`                                           |             |
+| certificate.dnsNames\[0\]                                    | string | `"webapp.test"`                                           |             |
 | certificate.enabled                                          | bool   | `true`                                                    |             |
 | certificate.host                                             | string | `"webapp.test"`                                           |             |
 | certificate.issuer                                           | string | `"letsencrypt-dns"`                                       |             |
@@ -23,14 +23,14 @@ A Helm chart for Kubernetes
 | ingress.annotations."cert-manager.io/cluster-issuer"         | string | `"letsencrypt-dns"`                                       |             |
 | ingress.annotations."certmanager.k8s.io/acme-challenge-type" | string | `"dns01"`                                                 |             |
 | ingress.enabled                                              | bool   | `true`                                                    |             |
-| ingress.entrypoints[0]                                       | string | `"websecure"`                                             |             |
+| ingress.entrypoints\[0\]                                     | string | `"websecure"`                                             |             |
 | ingress.name                                                 | string | `"webapp"`                                                |             |
 | ingress.namespace                                            | string | `"default"`                                               |             |
-| ingress.routes[0].kind                                       | string | `"Rule"`                                                  |             |
-| ingress.routes[0].match                                      | string | `"Host(`webapp.test`)"`                                   |             |
-| ingress.routes[0].services[0].name                           | string | `"webapp"`                                                |             |
-| ingress.routes[0].services[0].namespace                      | string | `"default"`                                               |             |
-| ingress.routes[0].services[0].port                           | int    | `7512`                                                    |             |
+| ingress.routes\[0\].kind                                     | string | `"Rule"`                                                  |             |
+| ingress.routes\[0\].match                                    | string | `"Host(`webapp.test`)"`                                   |             |
+| ingress.routes\[0\].services\[0\].name                       | string | `"webapp"`                                                |             |
+| ingress.routes\[0\].services\[0\].namespace                  | string | `"default"`                                               |             |
+| ingress.routes\[0\].services\[0\].port                       | int    | `7512`                                                    |             |
 | ingress.tls.enabled                                          | bool   | `true`                                                    |             |
 | ingress.tls.secretName                                       | string | `"webapp"`                                                |             |
 | keycloak.extraEnv                                            | string | `"- name: PROXY_ADDRESS_FORWARDING\n  value: \"true\"\n"` |             |
@@ -43,6 +43,6 @@ A Helm chart for Kubernetes
 | secretRoute53.namespace                                      | string | `"default"`                                               |             |
 | secretRoute53.secret_key                                     | string | `"bXktc3VwZXItc2VjcmV0LWtleQ=="`                          |             |
 
----
+______________________________________________________________________
 
-Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)
+Autogenerated from chart metadata using [helm-docs v1.14.2](https://github.com/norwoodj/helm-docs/releases/v1.14.2)
