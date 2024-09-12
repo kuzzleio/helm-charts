@@ -36,7 +36,7 @@ extraEnvs:
   - name: NODE_ENV
     value: production
 
-command: ["kuzzle", "start"]
+command: []
 args: []
 
 entrypoints:
