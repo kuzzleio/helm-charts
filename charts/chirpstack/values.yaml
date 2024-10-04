@@ -44,6 +44,9 @@ chirpstack:
     # Hostname of the database server
     host: localhost
 
+    # Port of the database server
+    port: 5432
+
     # Name of the database to use for ChirpStack
     database: chirpstack
 

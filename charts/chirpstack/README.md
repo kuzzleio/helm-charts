@@ -1,6 +1,6 @@
 # chirpstack
 
-![Version: 1.1.0](https://img.shields.io/badge/Version-1.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.9.0](https://img.shields.io/badge/AppVersion-4.9.0-informational?style=flat-square)
+![Version: 1.1.1](https://img.shields.io/badge/Version-1.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.9.0](https://img.shields.io/badge/AppVersion-4.9.0-informational?style=flat-square)
 
 ChirpStack Kubernetes Chart
 
@@ -37,6 +37,7 @@ ChirpStack Kubernetes Chart
 | chirpstack.postgres.database               | string | `"chirpstack"`                                           |             |
 | chirpstack.postgres.host                   | string | `"localhost"`                                            |             |
 | chirpstack.postgres.password               | string | `"postgres"`                                             |             |
+| chirpstack.postgres.port                   | int    | `5432`                                                   |             |
 | chirpstack.postgres.sslMode                | string | `"disable"`                                              |             |
 | chirpstack.postgres.user                   | string | `"postgres"`                                             |             |
 | chirpstack.redis.cluster                   | bool   | `false`                                                  |             |

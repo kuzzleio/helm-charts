@@ -12,7 +12,7 @@ data:
 
 
     [postgresql]
-      dsn="postgres://{{ .Values.chirpstack.postgres.user }}:{{ .Values.chirpstack.postgres.password }}@{{ .Values.chirpstack.postgres.host }}/{{ .Values.chirpstack.postgres.database }}?sslmode={{ .Values.chirpstack.postgres.sslMode }}"
+    dsn="postgres://{{ .Values.chirpstack.postgres.user }}:{{ .Values.chirpstack.postgres.password }}@{{ .Values.chirpstack.postgres.host }}:{{ .Values.chirpstack.postgres.port }}/{{ .Values.chirpstack.postgres.database }}?sslmode={{ .Values.chirpstack.postgres.sslMode }}"
 
       max_open_connections=10
       min_idle_connections=0
