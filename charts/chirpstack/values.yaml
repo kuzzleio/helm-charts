@@ -35,6 +35,9 @@ chirpstack:
     pullPolicy: IfNotPresent
     tag: ""
 
+  # Secret contenting chirpstack.toml file
+  existingChirpstackConfigSecret: ""
+
   # Configuration for connecting to the PostgreSQL database
   postgres:
     # PostgreSQL user credentials

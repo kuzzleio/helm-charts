@@ -5,6 +5,7 @@ metadata:
   labels:
     {{- include "chirpstack.labels" . | nindent 4 }}
 data:
+{{- if not .Values.chirpstack.existingChirpstackConfigSecret -}}
   # https://www.chirpstack.io/docs/chirpstack/configuration.html#example-chirpstacktoml-configuration
   chirpstack.toml: |
     [logging]
@@ -48,6 +49,7 @@ data:
     [monitoring]
       bind="0.0.0.0:{{ .Values.chirpstack.metrics.port }}"
     {{ end }}
+{{- end }}
 
   # https://www.chirpstack.io/docs/chirpstack/configuration.html#example-region_eu868toml-configuration
   eu868.toml: |
