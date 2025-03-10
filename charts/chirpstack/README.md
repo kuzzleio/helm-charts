@@ -1,18 +1,19 @@
 # chirpstack
 
-![Version: 1.1.1](https://img.shields.io/badge/Version-1.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.9.0](https://img.shields.io/badge/AppVersion-4.9.0-informational?style=flat-square)
+![Version: 1.2.0](https://img.shields.io/badge/Version-1.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.11.1](https://img.shields.io/badge/AppVersion-4.11.1-informational?style=flat-square)
 
 ChirpStack Kubernetes Chart
 
 ## Values
 
 | Key                                        | Type   | Default                                                  | Description |
-| ------------------------------------------ | ------ | -------------------------------------------------------- | ----------- |
+| ------------------------------------------ |--------| -------------------------------------------------------- | ----------- |
 | chirpstack.affinity                        | object | `{}`                                                     |             |
 | chirpstack.apiSecret                       | string | `"you-must-replace-me"`                                  |             |
 | chirpstack.args\[0\]                       | string | `"--config"`                                             |             |
 | chirpstack.args\[1\]                       | string | `"/etc/chirpstack"`                                      |             |
 | chirpstack.command                         | list   | `[]`                                                     |             |
+| chirpstack.existingChirpstackConfigSecret  | string | `""`                                                     |             |
 | chirpstack.extraConfigFiles                | object | `{}`                                                     |             |
 | chirpstack.extraEnvs                       | list   | `[]`                                                     |             |
 | chirpstack.http.containerPort              | int    | `8080`                                                   |             |
