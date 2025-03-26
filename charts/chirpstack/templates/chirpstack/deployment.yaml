@@ -70,8 +70,13 @@ spec:
             {{- toYaml .Values.chirpstack.resources | nindent 12 }}
       volumes:
         - name: config
+        {{- if .Values.chirpstack.existingChirpstackConfigSecret }}
+          secret:
+            secretName: {{ .Values.chirpstack.existingChirpstackConfigSecret }}
+        {{- else }}
           configMap:
             name: {{ template "chirpstack.core" . }}
+        {{- end }}
         {{- if .Values.chirpstack.extraVolumes }}
           {{- toYaml .Values.chirpstack.extraVolumes | nindent 8 }}
         {{- end }}
