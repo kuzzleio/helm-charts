@@ -29,6 +29,16 @@ chirpstack:
     # - name: MY_VAR
     #   value: myValue
 
+  # Extra volume mounts for the container
+  extraVolumeMounts: []
+    # - name: my-volume
+    #   mountPath: /opt/my-stuff
+
+  # Additional volumes for pod
+  extraVolumes: []
+    # - name: my-volume
+    #   emptyDir: {}
+
   # Overrides for the image being pulled from the Docker registry
   image:
     repository: chirpstack/chirpstack
@@ -187,6 +197,16 @@ chirpstackRestApi:
   extraEnvs: []
     # - name: MY_VAR
     #   value: myValue
+
+  # Extra volume mounts for the container
+  extraVolumeMounts: []
+    # - name: my-volume
+  #   mountPath: /opt/my-stuff
+
+  # Additional volumes for pod
+  extraVolumes: []
+    # - name: my-volume
+  #   emptyDir: {}
 
   # Overrides for the image being pulled from the Docker registry
   image:

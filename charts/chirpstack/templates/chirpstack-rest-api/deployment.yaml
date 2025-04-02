@@ -64,6 +64,14 @@ spec:
               port: api
           resources:
             {{- toYaml .Values.chirpstackRestApi.resources | nindent 12 }}
+          {{- if .Values.chirpstackRestApi.extraVolumeMounts }}
+          volumeMounts:
+            {{- toYaml .Values.chirpstackRestApi.extraVolumeMounts | nindent 12 }}
+          {{- end }}
+    {{- if .Values.chirpstackRestApi.extraVolumes }}
+      volumes:
+        {{- toYaml .Values.chirpstackRestApi.extraVolumes | nindent 8 }}
+    {{- end }}
       {{- with .Values.chirpstackRestApi.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

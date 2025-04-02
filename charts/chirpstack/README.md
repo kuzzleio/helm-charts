@@ -1,13 +1,13 @@
 # chirpstack
 
-![Version: 1.2.0](https://img.shields.io/badge/Version-1.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.11.1](https://img.shields.io/badge/AppVersion-4.11.1-informational?style=flat-square)
+![Version: 1.3.0](https://img.shields.io/badge/Version-1.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 4.11.1](https://img.shields.io/badge/AppVersion-4.11.1-informational?style=flat-square)
 
 ChirpStack Kubernetes Chart
 
 ## Values
 
 | Key                                        | Type   | Default                                                  | Description |
-| ------------------------------------------ |--------| -------------------------------------------------------- | ----------- |
+|--------------------------------------------|--------| -------------------------------------------------------- | ----------- |
 | chirpstack.affinity                        | object | `{}`                                                     |             |
 | chirpstack.apiSecret                       | string | `"you-must-replace-me"`                                  |             |
 | chirpstack.args\[0\]                       | string | `"--config"`                                             |             |
@@ -16,6 +16,8 @@ ChirpStack Kubernetes Chart
 | chirpstack.existingChirpstackConfigSecret  | string | `""`                                                     |             |
 | chirpstack.extraConfigFiles                | object | `{}`                                                     |             |
 | chirpstack.extraEnvs                       | list   | `[]`                                                     |             |
+| chirpstack.extraVolumeMounts               | list   | `[]`                                                     |             |
+| chirpstack.extraVolumes                    | list   | `[]`                                                     |             |
 | chirpstack.http.containerPort              | int    | `8080`                                                   |             |
 | chirpstack.http.port                       | int    | `8080`                                                   |             |
 | chirpstack.image.pullPolicy                | string | `"IfNotPresent"`                                         |             |
@@ -60,6 +62,8 @@ ChirpStack Kubernetes Chart
 | chirpstackRestApi.command                  | list   | `[]`                                                     |             |
 | chirpstackRestApi.enabled                  | bool   | `false`                                                  |             |
 | chirpstackRestApi.extraEnvs                | list   | `[]`                                                     |             |
+| chirpstackRestApi.extraVolumeMounts        | list   | `[]`                                                     |             |
+| chirpstackRestApi.extraVolumes             | list   | `[]`                                                     |             |
 | chirpstackRestApi.http.containerPort       | int    | `8090`                                                   |             |
 | chirpstackRestApi.http.cors                | string | `"0.0.0.0"`                                              |             |
 | chirpstackRestApi.http.insecure            | bool   | `true`                                                   |             |
