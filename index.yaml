@@ -3,6 +3,16 @@ entries:
   chirpstack:
   - apiVersion: v2
     appVersion: 4.11.1
+    created: "2025-04-02T15:15:50.889251869Z"
+    description: ChirpStack Kubernetes Chart
+    digest: a73e4a6d70e14940ec6ba859f9f93a19b987488dfde268579ee2d7037dce1989
+    name: chirpstack
+    type: application
+    urls:
+    - https://github.com/kuzzleio/helm-charts/releases/download/chirpstack-1.3.0/chirpstack-1.3.0.tgz
+    version: 1.3.0
+  - apiVersion: v2
+    appVersion: 4.11.1
     created: "2025-03-11T12:43:50.822180089Z"
     description: ChirpStack Kubernetes Chart
     digest: 22da30602069f8635f0bc6d9d6b2473a5c118099b8582a05acf31c1411298abf
@@ -1046,4 +1056,4 @@ entries:
     urls:
     - https://github.com/kuzzleio/helm-charts/releases/download/webapp-0.1.0/webapp-0.1.0.tgz
     version: 0.1.0
-generated: "2025-03-11T12:43:50.822316683Z"
+generated: "2025-04-02T15:15:50.889447894Z"
