@@ -49,7 +49,6 @@ data:
     [monitoring]
       bind="0.0.0.0:{{ .Values.chirpstack.metrics.port }}"
     {{ end }}
-{{- end }}
 
   # https://www.chirpstack.io/docs/chirpstack/configuration.html#example-region_eu868toml-configuration
   eu868.toml: |
@@ -70,3 +69,4 @@ data:
   {{- range $key, $value := .Values.chirpstack.extraConfigFiles }}
   {{ $key | nindent 2 }}: | {{ $value | nindent 4 }}
   {{- end }}
+{{- end }}
