@@ -16,6 +16,9 @@ spec:
       labels:
         {{- include "webapp.selectorLabels" . | nindent 8 }}
     spec:
+    {{- if .Values.priorityClass }}
+      priorityClassName: {{ .Values.priorityClass }}
+    {{- end }}
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
@@ -65,4 +68,3 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-
