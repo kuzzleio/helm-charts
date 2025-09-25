@@ -26,9 +26,17 @@ Description of the chart available [here](charts/webapp/README.md)
 
 Description of the chart available [here](charts/chirpstack/README.md)
 
-### QPack chart
+### Paas kuzzle chart (compatible elasticsearch 7)
 
-Description of the chart available [here](charts/qpack/README.md)
+Description of the chart available [here](charts/paas-kuzzle/README.md)
+
+### Paas kuzzle chart (compatible elasticsearch 8)
+
+Description of the chart available [here](charts/paas-kuzzle-es8/README.md)
+
+### Paas webapp chart
+
+Description of the chart available [here](charts/paas-webapp/README.md)
 
 ## Contributing
 

@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   name: nginx
-  tag: 1.25.1
+  tag: latest
   pullPolicy: Always
 
 imagePullSecrets: []

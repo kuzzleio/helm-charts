@@ -6,8 +6,6 @@ webapp:
     tag: latest
     pullPolicy: Always
 
-  imagePullSecrets:
-    - name: "webapp-docker"
 
   updateStrategy: RollingUpdate
 
@@ -22,45 +20,3 @@ webapp:
   #     targetPort: 1883
   #     protocol: TCP
 
-
-secret:
-  enabled: false
-  # name: webapp-secret
-  # dockerconfigjson: ewogICJhdXRocyI6IHsKICAgICJyZWdpc3RyeSI6IHsKICAgICAgImF1dGgiOiAiWVdSdGFXNDZjR0Z6YzNkdmNtUT0iCiAgICB9CiAgfQp9
-
-certificate:
-  enabled: false
-  # issuer: letsencrypt-dns
-  # host: webapp.test
-  # namespace: default
-  # name: webapp
-
-  # dnsNames:
-  #   - webapp.test
-
-ingress:
-  enabled: false
-
-  # name: webapp
-  # namespace: default
-
-  # annotations:
-  #   cert-manager.io/cluster-issuer: "letsencrypt-dns"
-  #   certmanager.k8s.io/acme-challenge-type: dns01
-
-  # entrypoints:
-  #   - websecure
-
-  # routes:
-  #   - match: Host(`webapp.test`)
-  #     kind: Rule
-  #     services:
-  #       - name: webapp
-  #         port: 7512
-  #         namespace: default
-  # tls:
-  #   enabled: true
-  #   secretName: webapp
-
-ingressTCP:
-  enabled: false
