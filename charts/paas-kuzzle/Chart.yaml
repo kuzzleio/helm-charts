@@ -1,6 +1,6 @@
 apiVersion: v2
 name: paas-kuzzle
-description: A Helm chart for Kubernetes
+description: Kuzzle v2, redis v8 and elasticsearch v7 under the same roof
 
 # A chart can be either an 'application' or a 'library' chart.
 #
@@ -15,7 +15,7 @@ type: application
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 3.0.0
+version: 3.2.0
 
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
@@ -25,11 +25,11 @@ appVersion: 2.47.0
 
 dependencies:
   - name: kuzzle
-    version: 1.4.0
+    version: 1.5.1
     repository: "https://kuzzleio.github.io/helm-charts/"
   - name: elasticsearch
     version: 7.17.3
     repository: https://helm.elastic.co/
   - name: redis
-    version: 16.12.2
+    version: 22.0.7
     repository: https://charts.bitnami.com/bitnami/
