@@ -1,16 +1,16 @@
 # paas-kuzzle
 
-![Version: 3.0.0](https://img.shields.io/badge/Version-3.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.47.0](https://img.shields.io/badge/AppVersion-2.47.0-informational?style=flat-square)
+![Version: 3.3.0](https://img.shields.io/badge/Version-3.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.47.0](https://img.shields.io/badge/AppVersion-2.47.0-informational?style=flat-square)
 
-A Helm chart for Kubernetes
+Kuzzle v2, redis v8 and elasticsearch v7 under the same roof
 
 ## Requirements
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami/ | redis | 16.12.2 |
+| https://charts.bitnami.com/bitnami/ | redis | 22.0.7 |
 | https://helm.elastic.co/ | elasticsearch | 7.17.3 |
-| https://kuzzleio.github.io/helm-charts/ | kuzzle | 1.4.0 |
+| https://kuzzleio.github.io/helm-charts/ | kuzzle | 1.5.1 |
 
 ## Values
 
@@ -43,9 +43,11 @@ A Helm chart for Kubernetes
 | kuzzle.extraEnvs[2].value | string | `"redis-master"` |  |
 | kuzzle.extraEnvs[3].name | string | `"NODE_ENV"` |  |
 | kuzzle.extraEnvs[3].value | string | `"production"` |  |
+| kuzzle.extraEnvs[4].name | string | `"kuzzle_services__storageEngine__majorVersion"` |  |
+| kuzzle.extraEnvs[4].value | string | `"7"` |  |
 | kuzzle.image.name | string | `"kuzzleio/kuzzle"` |  |
 | kuzzle.image.pullPolicy | string | `"Always"` |  |
-| kuzzle.image.tag | string | `""` |  |
+| kuzzle.image.tag | string | `"2.47.0"` |  |
 | kuzzle.imagePullSecrets[0].name | string | `"kuzzle-docker"` |  |
 | kuzzle.metrics.path | string | `"/_/metrics"` |  |
 | kuzzle.metrics.port | int | `7512` |  |

@@ -1,6 +1,6 @@
 dependencies:
 - name: webapp
   repository: https://kuzzleio.github.io/helm-charts
-  version: 1.2.0
-digest: sha256:606aa364dcc04dbc125c3f66551f9fbb6bc3b4a6c081e7ba0bf2d6a176a6597d
-generated: "2024-09-12T10:44:51.136494817+02:00"
+  version: 1.3.0
+digest: sha256:72eba3640e6e613f62eeeb6c66a67b9f752b87ab9dc9efa67ed62a8b18b8e584
+generated: "2025-09-25T21:48:28.454545+02:00"

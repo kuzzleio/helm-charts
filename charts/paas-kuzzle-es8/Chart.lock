@@ -1,0 +1,12 @@
+dependencies:
+- name: kuzzle
+  repository: https://kuzzleio.github.io/helm-charts/
+  version: 1.5.1
+- name: elasticsearch
+  repository: https://charts.bitnami.com/bitnami/
+  version: 21.4.4
+- name: redis
+  repository: https://charts.bitnami.com/bitnami/
+  version: 22.0.7
+digest: sha256:8a4b4a4567f63c6635d2419e431c86e83cb8256ae6ccdced86bfa5f8c05c665a
+generated: "2025-09-25T21:52:30.966615+02:00"

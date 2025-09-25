@@ -1,0 +1,89 @@
+kuzzle:
+  replicaCount: 1
+
+  image:
+    name: kuzzleio/kuzzle
+    pullPolicy: Always
+
+  updateStrategy: RollingUpdate
+
+  extraEnvs:
+    - name: kuzzle_services__storageEngine__client__node
+      value: "http://elasticsearch:9200"
+    - name: kuzzle_services__internalCache__node__host
+      value: "redis-master"
+    - name: kuzzle_services__memoryStorage__node__host
+      value: "redis-master"
+    - name: NODE_ENV
+      value: "production"
+    - name: kuzzle_services__storageEngine__majorVersion
+      value: "8"
+
+  metrics:
+    port: 7512
+    path: "/_/metrics"
+
+elasticsearch:
+  global:
+    kibanaEnabled: false
+
+  master:
+    masterOnly: false
+    replicaCount: 1
+    heapSize: "1g"
+    resources:
+      requests:
+        cpu: 1
+        memory: "2G"
+      limits:
+        cpu: 1
+        memory: "2G"
+    persistence:
+      enabled: true
+      accessModes:
+        - ReadWriteOnce
+    readinessProbe:
+      enabled: true
+      initialDelaySeconds: 60
+
+  data:
+    replicaCount: 0
+
+  ingest:
+    enabled: false
+
+  coordinating:
+    replicaCount: 0
+
+  security:
+    enabled: false
+    tls:
+      enabled: false
+    authentication:
+      enabled: false
+      rbac:
+        enabled: false
+
+  clustering:
+    minimumMasterNodes: 1
+
+redis:
+  auth:
+    enabled: false
+
+  master:
+    persistence:
+      enabled: false
+
+    resources: {}
+
+  replica:
+    replicaCount: 1
+
+    persistence:
+      enabled: false
+
+    resources: {}
+
+  metrics:
+    enabled: true

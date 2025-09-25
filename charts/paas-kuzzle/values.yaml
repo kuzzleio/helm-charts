@@ -12,7 +12,7 @@ kuzzle:
 
   image:
     name: kuzzleio/kuzzle
-    tag: ""
+    tag: "2.47.0"
     pullPolicy: Always
 
   imagePullSecrets:
@@ -27,6 +27,8 @@ kuzzle:
       value: redis-master
     - name: NODE_ENV
       value: production
+    - name: kuzzle_services__storageEngine__majorVersion
+      value: "7"
 
   metrics:
     port: 7512
