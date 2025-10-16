@@ -25,21 +25,22 @@ spec:
     {{- end }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          env: 
-            {{- toYaml .Values.extraEnvs | nindent 12 }} 
-          command: 
+          env:
+            {{- toYaml .Values.extraEnvs | nindent 12 }}
+          command:
             {{- toYaml .Values.command | nindent 12 }}
-          args: 
+          args:
             {{- toYaml .Values.args | nindent 12 }}
           ports:
             - name: http
-              containerPort: {{ .Values.service.port }}
+              containerPort: {{ .Values.service.targetPort }}
               protocol: TCP
           {{- range .Values.extraEntrypoints }}
             - name: {{ .name }}
@@ -48,22 +49,35 @@ spec:
           {{- end }}
           {{- if .Values.probes.liveness.enable }}
           livenessProbe:
-            {{- toYaml .Values.probes.liveness.config | nindent 12 }} 
+            {{- toYaml .Values.probes.liveness.config | nindent 12 }}
           {{- end }}
           {{- if .Values.probes.readiness.enable }}
           readinessProbe:
-            {{- toYaml .Values.probes.readiness.config | nindent 12 }} 
+            {{- toYaml .Values.probes.readiness.config | nindent 12 }}
           {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+
+      {{- if .Values.topologySpreadConstraints.enabled }}
+      topologySpreadConstraints:
+        - maxSkew: {{ .Values.topologySpreadConstraints.maxSkew | default 1 }}
+          topologyKey: {{ .Values.topologySpreadConstraints.topologyKey | default "kubernetes.io/hostname" | quote }}
+          whenUnsatisfiable: {{ .Values.topologySpreadConstraints.whenUnsatisfiable | default "DoNotSchedule" }}
+          labelSelector:
+            matchLabels:
+{{ include "webapp.selectorLabels" . | nindent 14 }}
+      {{- end }}
+
     {{- with .Values.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
     {{- end }}
+
     {{- with .Values.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
