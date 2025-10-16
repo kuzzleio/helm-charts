@@ -1,131 +1,145 @@
 # Default values for kuzzle.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
 
+# -- Number of Kuzzle pod replicas
 replicaCount: 1
 
 image:
+  # -- Kuzzle container image repository
   name: kuzzleio/kuzzle
-  tag: ""
+  # -- Kuzzle image tag (overrides .Chart.AppVersion if set)
+  tag: "2.48.0"
+  # -- Image pull policy
   pullPolicy: Always
 
+# -- List of image pull secrets (for private registries)
 imagePullSecrets: []
 
+# -- Extra labels added to all chart resources
 labels: {}
+# -- Extra labels added to the pod template metadata
 podLabels: {}
 
+# -- String to partially override chart name
 nameOverride: ""
+# -- String to fully override chart name
 fullnameOverride: ""
 
 updateStrategy:
+  # -- Deployment update strategy type
   type: RollingUpdate
   rollingUpdate:
+    # -- Max surge pods during rolling update
     maxSurge: 1
+    # -- Max unavailable pods during rolling update
     maxUnavailable: 1
 
 podSecurityContext:
+  # -- fsGroup for shared volumes in the pod
   fsGroup: 1000
 
-extraEnvs:
-  - name: kuzzle_services__storageEngine__client__node
-    value: http://elasticsearch-master:9200
-  - name: kuzzle_services__internalCache__node__host
-    value: redis-master
-  - name: kuzzle_services__memoryStorage__node__host
-    value: redis-master
-  - name: NODE_ENV
-    value: production
+# -- Additional environment variables to inject into the Kuzzle container
+extraEnvs: []
+  # - name: kuzzle_services__storageEngine__client__node
+  #   value: http://elasticsearch:9200
+  # - name: kuzzle_services__internalCache__node__host
+  #   value: redis-master
+  # - name: kuzzle_services__memoryStorage__node__host
+  #   value: redis-master
+  # - name: NODE_ENV
+  #   value: production
 
+# -- Container command override (leave empty to use image default)
 command: []
+
+# -- Container args override (leave empty to use image default)
 args: []
 
 entrypoints:
   http:
+    # -- Service port for HTTP API
     port: 7512
+    # -- Container port for HTTP API
     targetPort: 7512
   cluster_command:
+    # -- Service port for cluster command channel
     port: 7510
+    # -- Container port for cluster command channel
     targetPort: 7510
   cluster_sync:
+    # -- Service port for cluster sync channel
     port: 7511
+    # -- Container port for cluster sync channel
     targetPort: 7511
 
-extraEntrypoints:
-  - name: mqtt
-    port: 1883
-    targetPort: 1883
-    protocol: TCP
-
-  - name: debug
-    port: 9229
-    targetPort: 9229
-    protocol: TCP
+# -- Additional container ports to expose (e.g., MQTT, debug)
+extraEntrypoints: []
+#   - name: mqtt
+#     port: 1883
+#     targetPort: 1883
+#     protocol: TCP
+#   - name: debug
+#     port: 9229
+#     targetPort: 9229
+#     protocol: TCP
 
 probes:
   liveness:
+    # -- Liveness probe configuration
     httpGet:
+      # -- Liveness probe path
       path: /_healthcheck
+      # -- Liveness probe port (must match a named port)
       port: kuzzle-api
   readiness:
+    # -- Readiness probe configuration
     httpGet:
-      path: /_healthcheck
+      # -- Readiness probe path
+      path: /_ready
+      # -- Readiness probe port (must match a named port)
       port: kuzzle-api
 
 metrics:
+  # -- Port exposed for metrics scraping
   port: 7512
+  # -- HTTP path for metrics endpoint
   path: "/_/metrics"
 
-securityContext:
-  {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
+# -- Security context for the main Kuzzle container
+securityContext: {}
 
-resources:
-  {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+# -- Resource requests/limits for the Kuzzle container
+resources: {}
 
+# -- Node labels for pod assignment
 nodeSelector: {}
 
+# -- Tolerations for tainted nodes
 tolerations: []
 
+# -- Affinity rules for pod scheduling (advanced usage)
 affinity: {}
 
-# Extra Containers to run before the main container in the pod (e.g. for sidecar containers)
-# extraContainers:
-#   - name: my-sidecar
-#     image: my-sidecar-image
-#     imagePullPolicy: Always
-#     resources:
-#       {}
-#     volumeMounts:
-#       - name: my-volume
-#         mountPath: /path/to/my-volume
+topologySpreadConstraints:
+  # -- Enable pod distribution via topology spread constraints
+  enabled: false
+  # -- Maximum allowed skew between topology domains (1 = most even)
+  maxSkew: 1
+  # -- Topology key to spread across (e.g., kubernetes.io/hostname or topology.kubernetes.io/zone)
+  topologyKey: kubernetes.io/hostname
+  # -- Behavior when constraints cannot be satisfied (DoNotSchedule|ScheduleAnyway)
+  whenUnsatisfiable: DoNotSchedule
+
+# -- Extra init containers to run before the main container
 extraInitContainers: []
 
-# Configuration of the ingress to the Kuzzle API
 ingress:
+  # -- Enable Ingress resource
   enabled: false
+  # -- IngressClass name (e.g., nginx, traefik); leave empty to use the cluster default
   className: ""
+  # -- Additional annotations to add to the Ingress
   annotations: {}
+  # -- Ingress hosts configuration list
   hosts: []
-    # - host: kuzzle.example.com
-    #   paths:
-    #     - path: /
-    #       pathType: Prefix
+  # -- Ingress TLS configuration list
   tls: []
-    # - secretName: my-certificate
-    #   hosts:
-    #     - kuzzle.example.com

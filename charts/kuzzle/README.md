@@ -1,67 +1,59 @@
 # kuzzle
 
-![Version: 1.5.0](https://img.shields.io/badge/Version-1.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.47.0](https://img.shields.io/badge/AppVersion-2.47.0-informational?style=flat-square)
+![Version: 1.6.0](https://img.shields.io/badge/Version-1.6.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.48.0](https://img.shields.io/badge/AppVersion-2.48.0-informational?style=flat-square)
 
-Kuzzle Kubernetes chart compatible for ES7
+Kuzzle Kubernetes chart
 
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| affinity | object | `{}` |  |
-| args | list | `[]` |  |
-| command | list | `[]` |  |
-| entrypoints.cluster_command.port | int | `7510` |  |
-| entrypoints.cluster_command.targetPort | int | `7510` |  |
-| entrypoints.cluster_sync.port | int | `7511` |  |
-| entrypoints.cluster_sync.targetPort | int | `7511` |  |
-| entrypoints.http.port | int | `7512` |  |
-| entrypoints.http.targetPort | int | `7512` |  |
-| extraEntrypoints[0].name | string | `"mqtt"` |  |
-| extraEntrypoints[0].port | int | `1883` |  |
-| extraEntrypoints[0].protocol | string | `"TCP"` |  |
-| extraEntrypoints[0].targetPort | int | `1883` |  |
-| extraEntrypoints[1].name | string | `"debug"` |  |
-| extraEntrypoints[1].port | int | `9229` |  |
-| extraEntrypoints[1].protocol | string | `"TCP"` |  |
-| extraEntrypoints[1].targetPort | int | `9229` |  |
-| extraEnvs[0].name | string | `"kuzzle_services__storageEngine__client__node"` |  |
-| extraEnvs[0].value | string | `"http://elasticsearch-master:9200"` |  |
-| extraEnvs[1].name | string | `"kuzzle_services__internalCache__node__host"` |  |
-| extraEnvs[1].value | string | `"redis-master"` |  |
-| extraEnvs[2].name | string | `"kuzzle_services__memoryStorage__node__host"` |  |
-| extraEnvs[2].value | string | `"redis-master"` |  |
-| extraEnvs[3].name | string | `"NODE_ENV"` |  |
-| extraEnvs[3].value | string | `"production"` |  |
-| extraInitContainers | list | `[]` |  |
-| fullnameOverride | string | `""` |  |
-| image.name | string | `"kuzzleio/kuzzle"` |  |
-| image.pullPolicy | string | `"Always"` |  |
-| image.tag | string | `""` |  |
-| imagePullSecrets | list | `[]` |  |
-| ingress.annotations | object | `{}` |  |
-| ingress.className | string | `""` |  |
-| ingress.enabled | bool | `false` |  |
-| ingress.hosts | list | `[]` |  |
-| ingress.tls | list | `[]` |  |
-| labels | object | `{}` |  |
-| metrics.path | string | `"/_/metrics"` |  |
-| metrics.port | int | `7512` |  |
-| nameOverride | string | `""` |  |
-| nodeSelector | object | `{}` |  |
-| podLabels | object | `{}` |  |
-| podSecurityContext.fsGroup | int | `1000` |  |
-| probes.liveness.httpGet.path | string | `"/_healthcheck"` |  |
-| probes.liveness.httpGet.port | string | `"kuzzle-api"` |  |
-| probes.readiness.httpGet.path | string | `"/_healthcheck"` |  |
-| probes.readiness.httpGet.port | string | `"kuzzle-api"` |  |
-| replicaCount | int | `1` |  |
-| resources | object | `{}` |  |
-| securityContext | object | `{}` |  |
-| tolerations | list | `[]` |  |
-| updateStrategy.rollingUpdate.maxSurge | int | `1` |  |
-| updateStrategy.rollingUpdate.maxUnavailable | int | `1` |  |
-| updateStrategy.type | string | `"RollingUpdate"` |  |
+| affinity | object | `{}` | Affinity rules for pod scheduling (advanced usage) |
+| args | list | `[]` | Container args override (leave empty to use image default) |
+| command | list | `[]` | Container command override (leave empty to use image default) |
+| entrypoints.cluster_command.port | int | `7510` | Service port for cluster command channel |
+| entrypoints.cluster_command.targetPort | int | `7510` | Container port for cluster command channel |
+| entrypoints.cluster_sync.port | int | `7511` | Service port for cluster sync channel |
+| entrypoints.cluster_sync.targetPort | int | `7511` | Container port for cluster sync channel |
+| entrypoints.http.port | int | `7512` | Service port for HTTP API |
+| entrypoints.http.targetPort | int | `7512` | Container port for HTTP API |
+| extraEntrypoints | list | `[]` | Additional container ports to expose (e.g., MQTT, debug) |
+| extraEnvs | list | `[]` | Additional environment variables to inject into the Kuzzle container |
+| extraInitContainers | list | `[]` | Extra init containers to run before the main container |
+| fullnameOverride | string | `""` | String to fully override chart name |
+| image.name | string | `"kuzzleio/kuzzle"` | Kuzzle container image repository |
+| image.pullPolicy | string | `"Always"` | Image pull policy |
+| image.tag | string | `"2.48.0"` | Kuzzle image tag (overrides .Chart.AppVersion if set) |
+| imagePullSecrets | list | `[]` | List of image pull secrets (for private registries) |
+| ingress.annotations | object | `{}` | Additional annotations to add to the Ingress |
+| ingress.className | string | `""` | IngressClass name (e.g., nginx, traefik); leave empty to use the cluster default |
+| ingress.enabled | bool | `false` | Enable Ingress resource |
+| ingress.hosts | list | `[]` | Ingress hosts configuration list |
+| ingress.tls | list | `[]` | Ingress TLS configuration list |
+| labels | object | `{}` | Extra labels added to all chart resources |
+| metrics.path | string | `"/_/metrics"` | HTTP path for metrics endpoint |
+| metrics.port | int | `7512` | Port exposed for metrics scraping |
+| nameOverride | string | `""` | String to partially override chart name |
+| nodeSelector | object | `{}` | Node labels for pod assignment |
+| podLabels | object | `{}` | Extra labels added to the pod template metadata |
+| podSecurityContext.fsGroup | int | `1000` | fsGroup for shared volumes in the pod |
+| probes.liveness.httpGet | object | `{"path":"/_healthcheck","port":"kuzzle-api"}` | Liveness probe configuration |
+| probes.liveness.httpGet.path | string | `"/_healthcheck"` | Liveness probe path |
+| probes.liveness.httpGet.port | string | `"kuzzle-api"` | Liveness probe port (must match a named port) |
+| probes.readiness.httpGet | object | `{"path":"/_healthcheck","port":"kuzzle-api"}` | Readiness probe configuration |
+| probes.readiness.httpGet.path | string | `"/_healthcheck"` | Readiness probe path |
+| probes.readiness.httpGet.port | string | `"kuzzle-api"` | Readiness probe port (must match a named port) |
+| replicaCount | int | `1` | Number of Kuzzle pod replicas |
+| resources | object | `{}` | Resource requests/limits for the Kuzzle container |
+| securityContext | object | `{}` | Security context for the main Kuzzle container |
+| tolerations | list | `[]` | Tolerations for tainted nodes |
+| topologySpreadConstraints.enabled | bool | `false` | Enable pod distribution via topology spread constraints |
+| topologySpreadConstraints.maxSkew | int | `1` | Maximum allowed skew between topology domains (1 = most even) |
+| topologySpreadConstraints.topologyKey | string | `"kubernetes.io/hostname"` | Topology key to spread across (e.g., kubernetes.io/hostname or topology.kubernetes.io/zone) |
+| topologySpreadConstraints.whenUnsatisfiable | string | `"DoNotSchedule"` | Behavior when constraints cannot be satisfied (DoNotSchedule|ScheduleAnyway) |
+| updateStrategy.rollingUpdate.maxSurge | int | `1` | Max surge pods during rolling update |
+| updateStrategy.rollingUpdate.maxUnavailable | int | `1` | Max unavailable pods during rolling update |
+| updateStrategy.type | string | `"RollingUpdate"` | Deployment update strategy type |
 
 ----------------------------------------------
 Autogenerated from chart metadata using [helm-docs v1.14.2](https://github.com/norwoodj/helm-docs/releases/v1.14.2)
