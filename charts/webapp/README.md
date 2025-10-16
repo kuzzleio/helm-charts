@@ -1,6 +1,6 @@
 # webapp
 
-![Version: 1.3.0](https://img.shields.io/badge/Version-1.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.29.1](https://img.shields.io/badge/AppVersion-1.29.1-informational?style=flat-square)
+![Version: 1.4.0](https://img.shields.io/badge/Version-1.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.29.2](https://img.shields.io/badge/AppVersion-1.29.2-informational?style=flat-square)
 
 A web application
 
@@ -8,36 +8,45 @@ A web application
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| affinity | object | `{}` |  |
-| args | list | `[]` |  |
-| command | list | `[]` |  |
-| extraEnvs | list | `[]` |  |
-| fullnameOverride | string | `""` |  |
-| image.name | string | `"nginx"` |  |
-| image.pullPolicy | string | `"Always"` |  |
-| image.tag | string | `"latest"` |  |
-| imagePullSecrets | list | `[]` |  |
-| ingress.annotations | object | `{}` |  |
-| ingress.className | string | `""` |  |
-| ingress.enabled | bool | `false` |  |
-| ingress.hosts | list | `[]` |  |
-| ingress.tls | list | `[]` |  |
-| nameOverride | string | `""` |  |
-| nodeSelector | object | `{}` |  |
-| podSecurityContext.fsGroup | int | `1000` |  |
-| probes.liveness.config.httpGet.path | string | `"/"` |  |
-| probes.liveness.config.httpGet.port | string | `"http"` |  |
-| probes.liveness.enable | bool | `true` |  |
-| probes.readiness.config.httpGet.path | string | `"/"` |  |
-| probes.readiness.config.httpGet.port | string | `"http"` |  |
-| probes.readiness.enable | bool | `true` |  |
-| replicaCount | int | `1` |  |
-| resources | object | `{}` |  |
-| securityContext | object | `{}` |  |
-| service.port | int | `80` |  |
-| service.targetPort | int | `80` |  |
-| tolerations | list | `[]` |  |
-| updateStrategy | string | `"RollingUpdate"` |  |
+| affinity | object | `{}` | Règles d’affinité/anti-affinité (usage avancé) |
+| args | list | `[]` | Arguments passés au conteneur (override) |
+| command | list | `[]` | Commande du conteneur (override) |
+| extraEntrypoints | list | `[]` | Points d'entrée additionnels à exposer dans le conteneur |
+| extraEnvs | list | `[]` | Variables d'environnement additionnelles pour le conteneur |
+| extraInitContainers | list | `[]` | Conteneurs d'init supplémentaires (avant le conteneur principal) |
+| fullnameOverride | string | `""` | Nom complet de surcharge (remplace totalement le nom du chart) |
+| image.name | string | `"nginx"` | Référentiel de l'image conteneur |
+| image.pullPolicy | string | `"Always"` | Politique de pull de l'image |
+| image.tag | string | `"latest"` | Tag de l'image (version) |
+| imagePullSecrets | list | `[]` | Secrets d'extraction d'image (pour registres privés) |
+| ingress.annotations | object | `{}` | Annotations à appliquer à l'Ingress |
+| ingress.className | string | `""` | Nom de l'IngressClass (ex: nginx, traefik). Laisser vide pour utiliser la valeur par défaut du cluster |
+| ingress.enabled | bool | `false` | Active la ressource Ingress |
+| ingress.hosts | list | `[]` | Configuration des hôtes Ingress |
+| ingress.tls | list | `[]` | Configuration TLS de l'Ingress |
+| nameOverride | string | `""` | Nom partiel de surcharge (remplace partiellement le nom du chart) |
+| nodeSelector | object | `{}` | Sélecteur de nœuds (labels) pour l'ordonnancement |
+| podSecurityContext.fsGroup | int | `1000` | fsGroup pour les volumes partagés du pod |
+| priorityClass | string | `""` | PriorityClassName pour ce pod (optionnel) |
+| probes.liveness.config | object | `{"httpGet":{"path":"/","port":"http"}}` | Configuration de la livenessProbe |
+| probes.liveness.config.httpGet.path | string | `"/"` | Chemin sondé pour la livenessProbe |
+| probes.liveness.config.httpGet.port | string | `"http"` | Port sondé (nommé ou numérique) |
+| probes.liveness.enable | bool | `true` | Active/désactive la livenessProbe |
+| probes.readiness.config | object | `{"httpGet":{"path":"/","port":"http"}}` | Configuration de la readinessProbe |
+| probes.readiness.config.httpGet.path | string | `"/"` | Chemin sondé pour la readinessProbe |
+| probes.readiness.config.httpGet.port | string | `"http"` | Port sondé (nommé ou numérique) |
+| probes.readiness.enable | bool | `true` | Active/désactive la readinessProbe |
+| replicaCount | int | `1` | Nombre de réplicas du Deployment |
+| resources | object | `{}` | Requêtes/Limites de ressources du conteneur |
+| securityContext | object | `{}` | Contexte de sécurité appliqué au conteneur principal |
+| service.port | int | `80` | Port du Service (exposé dans le cluster) |
+| service.targetPort | int | `80` | Port du conteneur ciblé par le Service |
+| tolerations | list | `[]` | Tolérations des taints de nœuds |
+| topologySpreadConstraints.enabled | bool | `false` | Active la répartition des pods via TopologySpreadConstraints |
+| topologySpreadConstraints.maxSkew | int | `1` | Écart maximum autorisé entre domaines topologiques (1 = plus uniforme) |
+| topologySpreadConstraints.topologyKey | string | `"kubernetes.io/hostname"` | Clé de topologie sur laquelle répartir    Exemples: kubernetes.io/hostname (répartition par nœud),              topology.kubernetes.io/zone (répartition par zone) |
+| topologySpreadConstraints.whenUnsatisfiable | string | `"DoNotSchedule"` | Comportement quand la contrainte ne peut pas être satisfaite    DoNotSchedule = strict (équivalent "hard")    ScheduleAnyway = souple (équivalent "soft") |
+| updateStrategy | string | `"RollingUpdate"` | Stratégie d'update du Deployment (RollingUpdate|Recreate) |
 
 ----------------------------------------------
 Autogenerated from chart metadata using [helm-docs v1.14.2](https://github.com/norwoodj/helm-docs/releases/v1.14.2)

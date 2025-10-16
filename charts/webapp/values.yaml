@@ -1,54 +1,79 @@
-# Default values for opendata.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
+# Default values for webapp.
 
+# -- Nombre de réplicas du Deployment
 replicaCount: 1
 
 image:
+  # -- Référentiel de l'image conteneur
   name: nginx
+  # -- Tag de l'image (version)
   tag: latest
+  # -- Politique de pull de l'image
   pullPolicy: Always
 
+# -- Secrets d'extraction d'image (pour registres privés)
 imagePullSecrets: []
 
+# -- Nom partiel de surcharge (remplace partiellement le nom du chart)
 nameOverride: ""
+# -- Nom complet de surcharge (remplace totalement le nom du chart)
 fullnameOverride: ""
 
+# -- Stratégie d'update du Deployment (RollingUpdate|Recreate)
 updateStrategy: RollingUpdate
 
 podSecurityContext:
+  # -- fsGroup pour les volumes partagés du pod
   fsGroup: 1000
 
 service:
-    port: 80
-    targetPort: 80
+  # -- Port du Service (exposé dans le cluster)
+  port: 80
+  # -- Port du conteneur ciblé par le Service
+  targetPort: 80
 
-# Configure extra entrypoints
-# extraEntrypoints:
+# -- Points d'entrée additionnels à exposer dans le conteneur
+extraEntrypoints: []
 #   - name: mqtt
 #     port: 1883
 #     targetPort: 1883
 #     protocol: TCP
 
+# -- Arguments passés au conteneur (override)
 args: []
+# -- Commande du conteneur (override)
 command: []
+# -- Variables d'environnement additionnelles pour le conteneur
 extraEnvs: []
 
 probes:
   liveness:
+    # -- Active/désactive la livenessProbe
     enable: true
+    # -- Configuration de la livenessProbe
     config:
       httpGet:
+        # -- Chemin sondé pour la livenessProbe
         path: /
+        # -- Port sondé (nommé ou numérique)
         port: http
   readiness:
+    # -- Active/désactive la readinessProbe
     enable: true
+    # -- Configuration de la readinessProbe
     config:
       httpGet:
+        # -- Chemin sondé pour la readinessProbe
         path: /
+        # -- Port sondé (nommé ou numérique)
         port: http
 
-securityContext: {}
+# -- PriorityClassName pour ce pod (optionnel)
+priorityClass: ""
+
+# -- Contexte de sécurité appliqué au conteneur principal
+securityContext:
+  {}
   # capabilities:
   #   drop:
   #   - ALL
@@ -56,11 +81,9 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
-resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+# -- Requêtes/Limites de ressources du conteneur
+resources:
+  {}
   # limits:
   #   cpu: 100m
   #   memory: 128Mi
@@ -68,23 +91,49 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 
+# -- Sélecteur de nœuds (labels) pour l'ordonnancement
 nodeSelector: {}
 
+# -- Tolérations des taints de nœuds
 tolerations: []
 
+# -- Règles d’affinité/anti-affinité (usage avancé)
 affinity: {}
 
-# Configuration of the ingress to the HTTP server
-ingress:
+topologySpreadConstraints:
+  # -- Active la répartition des pods via TopologySpreadConstraints
   enabled: false
+  # -- Écart maximum autorisé entre domaines topologiques (1 = plus uniforme)
+  maxSkew: 1
+  # -- Clé de topologie sur laquelle répartir
+  #    Exemples: kubernetes.io/hostname (répartition par nœud),
+  #              topology.kubernetes.io/zone (répartition par zone)
+  topologyKey: kubernetes.io/hostname
+  # -- Comportement quand la contrainte ne peut pas être satisfaite
+  #    DoNotSchedule = strict (équivalent "hard")
+  #    ScheduleAnyway = souple (équivalent "soft")
+  whenUnsatisfiable: DoNotSchedule
+
+# -- Conteneurs d'init supplémentaires (avant le conteneur principal)
+extraInitContainers: []
+
+ingress:
+  # -- Active la ressource Ingress
+  enabled: false
+  # -- Nom de l'IngressClass (ex: nginx, traefik). Laisser vide pour utiliser la valeur par défaut du cluster
   className: ""
+  # -- Annotations à appliquer à l'Ingress
   annotations: {}
-  hosts: []
-    # - host: kuzzle.example.com
+  # -- Configuration des hôtes Ingress
+  hosts:
+    []
+    # - host: webapp.example.com
     #   paths:
     #     - path: /
     #       pathType: Prefix
-  tls: []
+  # -- Configuration TLS de l'Ingress
+  tls:
+    []
     # - secretName: my-certificate
     #   hosts:
-    #     - kuzzle.example.com
+    #     - webapp.example.com
