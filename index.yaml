@@ -985,6 +985,27 @@ entries:
     version: 0.1.0
   paas-kuzzle-es8:
   - apiVersion: v2
+    appVersion: 2.54.4
+    created: "2026-04-29T16:07:36.691147653Z"
+    dependencies:
+    - name: kuzzle
+      repository: file://../kuzzle
+      version: 1.9.0
+    - alias: elasticsearch
+      name: elasticsearch-8
+      repository: file://../elasticsearch-8
+      version: 21.7.0
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami/
+      version: 25.4.1
+    description: Kuzzle v2, redis v8 and elasticsearch v8 under the same roof
+    digest: 9b6eb3b45e9deb24025f27e75338143005be487c77c0006e7591267410790421
+    name: paas-kuzzle-es8
+    type: application
+    urls:
+    - https://github.com/kuzzleio/helm-charts/releases/download/paas-kuzzle-es8-1.4.0/paas-kuzzle-es8-1.4.0.tgz
+    version: 1.4.0
+  - apiVersion: v2
     appVersion: 2.54.3
     created: "2026-04-29T14:01:19.290223195Z"
     dependencies:
@@ -1344,4 +1365,4 @@ entries:
     urls:
     - https://github.com/kuzzleio/helm-charts/releases/download/webapp-0.1.0/webapp-0.1.0.tgz
     version: 0.1.0
-generated: "2026-04-29T16:01:52.558622216Z"
+generated: "2026-04-29T16:07:36.691362885Z"
