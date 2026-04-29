@@ -1,6 +1,6 @@
 # kuzzle
 
-![Version: 1.6.0](https://img.shields.io/badge/Version-1.6.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.48.0](https://img.shields.io/badge/AppVersion-2.48.0-informational?style=flat-square)
+![Version: 1.8.0](https://img.shields.io/badge/Version-1.8.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.54.3](https://img.shields.io/badge/AppVersion-2.54.3-informational?style=flat-square)
 
 Kuzzle Kubernetes chart
 
@@ -23,7 +23,7 @@ Kuzzle Kubernetes chart
 | fullnameOverride | string | `""` | String to fully override chart name |
 | image.name | string | `"kuzzleio/kuzzle"` | Kuzzle container image repository |
 | image.pullPolicy | string | `"Always"` | Image pull policy |
-| image.tag | string | `"2.48.0"` | Kuzzle image tag (overrides .Chart.AppVersion if set) |
+| image.tag | string | `"2.54.3"` | Kuzzle image tag (overrides .Chart.AppVersion if set) |
 | imagePullSecrets | list | `[]` | List of image pull secrets (for private registries) |
 | ingress.annotations | object | `{}` | Additional annotations to add to the Ingress |
 | ingress.className | string | `""` | IngressClass name (e.g., nginx, traefik); leave empty to use the cluster default |
@@ -40,8 +40,8 @@ Kuzzle Kubernetes chart
 | probes.liveness.httpGet | object | `{"path":"/_healthcheck","port":"kuzzle-api"}` | Liveness probe configuration |
 | probes.liveness.httpGet.path | string | `"/_healthcheck"` | Liveness probe path |
 | probes.liveness.httpGet.port | string | `"kuzzle-api"` | Liveness probe port (must match a named port) |
-| probes.readiness.httpGet | object | `{"path":"/_healthcheck","port":"kuzzle-api"}` | Readiness probe configuration |
-| probes.readiness.httpGet.path | string | `"/_healthcheck"` | Readiness probe path |
+| probes.readiness.httpGet | object | `{"path":"/_ready","port":"kuzzle-api"}` | Readiness probe configuration |
+| probes.readiness.httpGet.path | string | `"/_ready"` | Readiness probe path |
 | probes.readiness.httpGet.port | string | `"kuzzle-api"` | Readiness probe port (must match a named port) |
 | replicaCount | int | `1` | Number of Kuzzle pod replicas |
 | resources | object | `{}` | Resource requests/limits for the Kuzzle container |
@@ -51,7 +51,7 @@ Kuzzle Kubernetes chart
 | topologySpreadConstraints.maxSkew | int | `1` | Maximum allowed skew between topology domains (1 = most even) |
 | topologySpreadConstraints.topologyKey | string | `"kubernetes.io/hostname"` | Topology key to spread across (e.g., kubernetes.io/hostname or topology.kubernetes.io/zone) |
 | topologySpreadConstraints.whenUnsatisfiable | string | `"DoNotSchedule"` | Behavior when constraints cannot be satisfied (DoNotSchedule|ScheduleAnyway) |
-| updateStrategy.rollingUpdate.maxSurge | int | `1` | Max surge pods during rolling update |
+| updateStrategy.rollingUpdate.maxSurge | int | `0` | Max surge pods during rolling update |
 | updateStrategy.rollingUpdate.maxUnavailable | int | `1` | Max unavailable pods during rolling update |
 | updateStrategy.type | string | `"RollingUpdate"` | Deployment update strategy type |
 
