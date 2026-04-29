@@ -81,6 +81,48 @@ entries:
     urls:
     - https://github.com/kuzzleio/helm-charts/releases/download/chirpstack-0.1.0/chirpstack-0.1.0.tgz
     version: 0.1.0
+  elasticsearch-8:
+  - annotations:
+      category: Analytics
+      images: |
+        - name: elasticsearch
+          image: docker.io/bitnami/elasticsearch:8.18.0-debian-12-r2
+        - name: elasticsearch-exporter
+          image: docker.io/bitnami/elasticsearch-exporter:1.9.0-debian-12-r6
+        - name: os-shell
+          image: docker.io/bitnami/os-shell:12-debian-12-r43
+      licenses: Apache-2.0
+      tanzuCategory: service
+    apiVersion: v2
+    appVersion: 8.18.0
+    created: "2026-04-29T09:53:42.476439278Z"
+    dependencies:
+    - condition: global.kibanaEnabled
+      name: kibana
+      repository: oci://registry-1.docker.io/bitnamicharts
+      version: 11.x.x
+    - name: common
+      repository: oci://registry-1.docker.io/bitnamicharts
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    description: Elasticsearch is a distributed search and analytics engine. It is
+      used for web search, log monitoring, and real-time analytics. Ideal for Big
+      Data applications.
+    digest: 2a62ada35db4f35ac04e55206623ee12d1decace4b34355a2f11494e8d4965fd
+    home: https://bitnami.com
+    icon: https://dyltqmyl993wv.cloudfront.net/assets/stacks/elasticsearch/img/elasticsearch-stack-220x234.png
+    keywords:
+    - elasticsearch
+    maintainers:
+    - name: Broadcom, Inc. All Rights Reserved.
+      url: https://github.com/bitnami/charts
+    name: elasticsearch-8
+    sources:
+    - https://github.com/bitnami/charts/tree/main/bitnami/elasticsearch
+    urls:
+    - https://github.com/kuzzleio/helm-charts/releases/download/elasticsearch-8-21.6.3/elasticsearch-8-21.6.3.tgz
+    version: 21.6.3
   iot:
   - apiVersion: v2
     appVersion: 1.16.0
@@ -104,6 +146,16 @@ entries:
     - https://github.com/kuzzleio/helm-charts/releases/download/iot-console-0.1.0/iot-console-0.1.0.tgz
     version: 0.1.0
   kuzzle:
+  - apiVersion: v2
+    appVersion: 2.54.3
+    created: "2026-04-29T09:53:42.694244499Z"
+    description: Kuzzle Kubernetes chart
+    digest: c55be48e751813a357b74beb07c704841bcf4e45fc26d7e9406f2f258e12a42a
+    name: kuzzle
+    type: application
+    urls:
+    - https://github.com/kuzzleio/helm-charts/releases/download/kuzzle-1.7.0/kuzzle-1.7.0.tgz
+    version: 1.7.0
   - apiVersion: v2
     appVersion: 2.48.0
     created: "2025-10-16T08:53:50.261247042Z"
@@ -1241,4 +1293,4 @@ entries:
     urls:
     - https://github.com/kuzzleio/helm-charts/releases/download/webapp-0.1.0/webapp-0.1.0.tgz
     version: 0.1.0
-generated: "2025-10-16T09:13:41.795749852Z"
+generated: "2026-04-29T09:53:42.694545726Z"
