@@ -7,7 +7,7 @@ image:
   # -- Kuzzle container image repository
   name: kuzzleio/kuzzle
   # -- Kuzzle image tag (overrides .Chart.AppVersion if set)
-  tag: "2.54.4"
+  tag: "2.56.0"
   # -- Image pull policy
   pullPolicy: Always
 
