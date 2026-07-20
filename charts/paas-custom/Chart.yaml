@@ -1,0 +1,21 @@
+apiVersion: v2
+name: paas-custom
+description: PaaS chart for arbitrary customer containers (custom apps) — wraps the generic webapp sub-chart under the `custom` alias, no template fork (ADR-0004 paas-console)
+type: application
+
+# This is the chart version. This version number should be incremented each time you make changes
+# to the chart and its templates, including the app version.
+# Versions are expected to follow Semantic Versioning (https://semver.org/)
+version: 1.0.0
+
+# The deployed application is an arbitrary customer container: this tracks the appVersion of the
+# wrapped webapp sub-chart (default nginx placeholder image, always overridden by the console).
+appVersion: 1.29.2
+
+dependencies:
+  - name: webapp
+    version: 1.5.0
+    repository: "https://kuzzleio.github.io/helm-charts"
+    # The alias is the whole point of this wrapper: values live under the `custom:` key
+    # and rendered resources are named `<release>-custom` (no more webapp/custom collision).
+    alias: custom

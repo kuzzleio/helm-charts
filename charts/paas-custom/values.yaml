@@ -1,0 +1,37 @@
+custom:
+  # -- Nombre de réplicas du Deployment
+  replicaCount: 1
+
+  image:
+    # -- Référentiel de l'image conteneur (placeholder — la console pose l'image projet)
+    name: nginx
+    # -- Tag de l'image (version)
+    tag: latest
+    # -- Politique de pull de l'image
+    pullPolicy: Always
+
+  # -- Stratégie d'update du Deployment (RollingUpdate|Recreate)
+  updateStrategy: RollingUpdate
+
+  # Un conteneur custom est un workload arbitraire : aucune hypothèse sur les endpoints
+  # HTTP qu'il expose, donc les probes de la sous-chart sont désactivées par défaut.
+  probes:
+    liveness:
+      # -- Active/désactive la livenessProbe (off par défaut : conteneur arbitraire)
+      enable: false
+    readiness:
+      # -- Active/désactive la readinessProbe (off par défaut : conteneur arbitraire)
+      enable: false
+
+  service:
+    # -- Port du Service (la console pose le customPort de l'app)
+    port: 80
+    # -- Port du conteneur ciblé par le Service
+    targetPort: 80
+
+  # -- Points d'entrée additionnels (un par protocole exposé par le conteneur)
+  extraEntrypoints: []
+  #   - name: mqtt
+  #     port: 1883
+  #     targetPort: 1883
+  #     protocol: TCP
