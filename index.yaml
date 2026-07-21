@@ -329,6 +329,24 @@ entries:
   paas-custom:
   - apiVersion: v2
     appVersion: 1.29.2
+    created: "2026-07-21T08:33:28.130829604Z"
+    dependencies:
+    - alias: custom
+      name: webapp
+      repository: https://kuzzleio.github.io/helm-charts
+      version: 1.5.0
+    description: PaaS chart for arbitrary customer containers (custom apps) — wraps
+      the generic webapp sub-chart under the `custom` alias (no fork of its templates),
+      plus the platform IngressRouteTCP wrapper template inherited from legacy paas-webapp
+      (ADR-0004 paas-console)
+    digest: b3ae2ee23b1778cf88d6bddc5dbed56e5c5de330190f3fe0fdd54b6c586ff152
+    name: paas-custom
+    type: application
+    urls:
+    - https://github.com/kuzzleio/helm-charts/releases/download/paas-custom-1.1.0/paas-custom-1.1.0.tgz
+    version: 1.1.0
+  - apiVersion: v2
+    appVersion: 1.29.2
     created: "2026-07-20T19:56:22.164607732Z"
     dependencies:
     - alias: custom
@@ -1414,4 +1432,4 @@ entries:
     urls:
     - https://github.com/kuzzleio/helm-charts/releases/download/webapp-0.1.0/webapp-0.1.0.tgz
     version: 0.1.0
-generated: "2026-07-20T19:56:22.164753428Z"
+generated: "2026-07-21T08:33:28.130977506Z"
