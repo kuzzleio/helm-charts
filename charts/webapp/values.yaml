@@ -91,6 +91,9 @@ resources:
   #   cpu: 100m
   #   memory: 128Mi
 
+# -- Labels additionnels posés sur les pods (ex: labels paas.kuzzle.io/* injectés par la console)
+podLabels: {}
+
 # -- Sélecteur de nœuds (labels) pour l'ordonnancement
 nodeSelector: {}
 
