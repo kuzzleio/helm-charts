@@ -35,3 +35,23 @@ custom:
   #     port: 1883
   #     targetPort: 1883
   #     protocol: TCP
+
+# Route TCP L4 Traefik (IngressRouteTCP) vers le Service de l'app — template wrapper
+# hérité de paas-webapp ≤ 2.3.1 (retiré par erreur au passage 3.0.0, restauré ici pour
+# les customs exposant un protocole TCP brut, ex. eiffagegc gateway :9000).
+ingressTCP:
+  # -- Active le rendu de l'IngressRouteTCP
+  enabled: false
+  # -- Nom de la ressource IngressRouteTCP
+  name: ""
+  # -- Namespace de la ressource (celui du release en pratique)
+  namespace: ""
+  # -- Annotations posées sur la ressource
+  annotations: {}
+  # -- entryPoints Traefik visés (doivent exister dans la config STATIQUE du cluster, ex. eiffagegc-tcp:4242)
+  entryPoints: []
+  # -- Routes TCP Traefik (match HostSNI + services name/port/namespace), passées telles quelles
+  routes: []
+  tls:
+    # -- Active la terminaison TLS Traefik (secretName requis)
+    enabled: false
