@@ -1,12 +1,12 @@
 apiVersion: v2
 name: paas-custom
-description: PaaS chart for arbitrary customer containers (custom apps) — wraps the generic webapp sub-chart under the `custom` alias, no template fork (ADR-0004 paas-console)
+description: PaaS chart for arbitrary customer containers (custom apps) — wraps the generic webapp sub-chart under the `custom` alias (no fork of its templates), plus the platform IngressRouteTCP wrapper template inherited from legacy paas-webapp (ADR-0004 paas-console)
 type: application
 
 # This is the chart version. This version number should be incremented each time you make changes
 # to the chart and its templates, including the app version.
 # Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 1.0.0
+version: 1.1.0
 
 # The deployed application is an arbitrary customer container: this tracks the appVersion of the
 # wrapped webapp sub-chart (default nginx placeholder image, always overridden by the console).
