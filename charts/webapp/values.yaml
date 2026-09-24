@@ -26,6 +26,29 @@ podSecurityContext:
   # -- fsGroup pour les volumes partagés du pod
   fsGroup: 1000
 
+# Délai de grâce accordé au pod entre SIGTERM et SIGKILL. Le hook `preStop`
+# ci-dessous s'exécute *dans* ce budget : le garder nettement supérieur à
+# l'attente qu'il observe.
+# -- Délai de grâce entre SIGTERM et SIGKILL (le hook preStop s'exécute dedans)
+terminationGracePeriodSeconds: 30
+
+# La suppression d'un pod retire l'endpoint et envoie SIGTERM de façon
+# concurrente : sans hook `preStop`, l'ingress adresse encore un pod qui a
+# commencé à se fermer — ~1-3 s de 502/503 par pod retiré, mesuré sur
+# paas-console #679. Le hook par défaut ne fait qu'attendre : le conteneur
+# continue de servir pendant l'attente, ce qui laisse la mise à jour de
+# l'EndpointSlice se propager jusqu'aux routeurs. D'autant plus utile derrière
+# nginx, dont le SIGTERM est un arrêt immédiat.
+#
+# Hook `exec` plutôt que le handler natif `sleep` (k8s >= 1.30) pour que la
+# chart reste valide sur des API servers plus anciens ; sur une image sans shell
+# le hook échoue bruyamment et la terminaison se déroule comme avant.
+# -- Hooks de cycle de vie ; le preStop par défaut draine l'endpoint avant l'arrêt (mettre `{}` pour désactiver)
+lifecycle:
+  preStop:
+    exec:
+      command: ["/bin/sh", "-c", "sleep 10"]
+
 service:
   # -- Port du Service (exposé dans le cluster)
   port: 80

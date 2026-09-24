@@ -1,6 +1,6 @@
 # kuzzle
 
-![Version: 1.10.0](https://img.shields.io/badge/Version-1.10.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.56.0](https://img.shields.io/badge/AppVersion-2.56.0-informational?style=flat-square)
+![Version: 1.11.0](https://img.shields.io/badge/Version-1.11.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.56.0](https://img.shields.io/badge/AppVersion-2.56.0-informational?style=flat-square)
 
 Kuzzle Kubernetes chart
 
@@ -31,6 +31,7 @@ Kuzzle Kubernetes chart
 | ingress.hosts | list | `[]` | Ingress hosts configuration list |
 | ingress.tls | list | `[]` | Ingress TLS configuration list |
 | labels | object | `{}` | Extra labels added to all chart resources |
+| lifecycle | object | `{"preStop":{"exec":{"command":["/bin/sh","-c","sleep 10"]}}}` | Container lifecycle hooks; the default preStop drains the endpoint before shutdown (set to `{}` to disable) |
 | metrics.path | string | `"/_/metrics"` | HTTP path for metrics endpoint |
 | metrics.port | int | `7512` | Port exposed for metrics scraping |
 | nameOverride | string | `""` | String to partially override chart name |
@@ -46,6 +47,7 @@ Kuzzle Kubernetes chart
 | replicaCount | int | `1` | Number of Kuzzle pod replicas |
 | resources | object | `{}` | Resource requests/limits for the Kuzzle container |
 | securityContext | object | `{}` | Security context for the main Kuzzle container |
+| terminationGracePeriodSeconds | int | `30` | Grace period between SIGTERM and SIGKILL (the preStop hook runs inside it) |
 | tolerations | list | `[]` | Tolerations for tainted nodes |
 | topologySpreadConstraints.enabled | bool | `false` | Enable pod distribution via topology spread constraints |
 | topologySpreadConstraints.maxSkew | int | `1` | Maximum allowed skew between topology domains (1 = most even) |

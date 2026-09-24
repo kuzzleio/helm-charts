@@ -1,6 +1,6 @@
 # webapp
 
-![Version: 1.5.0](https://img.shields.io/badge/Version-1.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.29.2](https://img.shields.io/badge/AppVersion-1.29.2-informational?style=flat-square)
+![Version: 1.7.0](https://img.shields.io/badge/Version-1.7.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.29.2](https://img.shields.io/badge/AppVersion-1.29.2-informational?style=flat-square)
 
 A web application
 
@@ -24,8 +24,10 @@ A web application
 | ingress.enabled | bool | `false` | Active la ressource Ingress |
 | ingress.hosts | list | `[]` | Configuration des hôtes Ingress |
 | ingress.tls | list | `[]` | Configuration TLS de l'Ingress |
+| lifecycle | object | `{"preStop":{"exec":{"command":["/bin/sh","-c","sleep 10"]}}}` | Hooks de cycle de vie ; le preStop par défaut draine l'endpoint avant l'arrêt (mettre `{}` pour désactiver) |
 | nameOverride | string | `""` | Nom partiel de surcharge (remplace partiellement le nom du chart) |
 | nodeSelector | object | `{}` | Sélecteur de nœuds (labels) pour l'ordonnancement |
+| podLabels | object | `{}` | Labels additionnels posés sur les pods (ex: labels paas.kuzzle.io/* injectés par la console) |
 | podSecurityContext.fsGroup | int | `1000` | fsGroup pour les volumes partagés du pod |
 | priorityClass | string | `""` | PriorityClassName pour ce pod (optionnel) |
 | probes.liveness.config | object | `{"httpGet":{"path":"/","port":"http"}}` | Configuration de la livenessProbe |
@@ -41,6 +43,7 @@ A web application
 | securityContext | object | `{}` | Contexte de sécurité appliqué au conteneur principal |
 | service.port | int | `80` | Port du Service (exposé dans le cluster) |
 | service.targetPort | int | `80` | Port du conteneur ciblé par le Service |
+| terminationGracePeriodSeconds | int | `30` | Délai de grâce entre SIGTERM et SIGKILL (le hook preStop s'exécute dedans) |
 | tolerations | list | `[]` | Tolérations des taints de nœuds |
 | topologySpreadConstraints.enabled | bool | `false` | Active la répartition des pods via TopologySpreadConstraints |
 | topologySpreadConstraints.maxSkew | int | `1` | Écart maximum autorisé entre domaines topologiques (1 = plus uniforme) |
