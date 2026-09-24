@@ -38,6 +38,27 @@ podSecurityContext:
   # -- fsGroup for shared volumes in the pod
   fsGroup: 1000
 
+# Grace period granted to the pod between SIGTERM and SIGKILL. The `preStop`
+# hook below runs *inside* this budget: keep it comfortably larger than the
+# sleep it performs.
+# -- Grace period between SIGTERM and SIGKILL (the preStop hook runs inside it)
+terminationGracePeriodSeconds: 30
+
+# Pod deletion removes the endpoint and sends SIGTERM concurrently, so without a
+# preStop hook the ingress keeps routing to a pod that has already started
+# shutting down — ~1-3 s of 502/503 per pod removed, measured on paas-console
+# #679. The default hook does nothing but wait: Kuzzle keeps serving during the
+# sleep, which gives the EndpointSlice update time to reach the routers.
+#
+# An exec hook is used rather than the native `sleep` handler (k8s >= 1.30) so
+# the chart stays valid on older API servers; on an image without a shell the
+# hook fails loudly and termination proceeds as it did before.
+# -- Container lifecycle hooks; the default preStop drains the endpoint before shutdown (set to `{}` to disable)
+lifecycle:
+  preStop:
+    exec:
+      command: ["/bin/sh", "-c", "sleep 10"]
+
 # -- Additional environment variables to inject into the Kuzzle container
 extraEnvs: []
   # - name: kuzzle_services__storageEngine__client__node
