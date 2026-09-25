@@ -1,6 +1,6 @@
 # kuzzle
 
-![Version: 1.11.1](https://img.shields.io/badge/Version-1.11.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.56.0](https://img.shields.io/badge/AppVersion-2.56.0-informational?style=flat-square)
+![Version: 1.12.0](https://img.shields.io/badge/Version-1.12.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.56.0](https://img.shields.io/badge/AppVersion-2.56.0-informational?style=flat-square)
 
 Kuzzle Kubernetes chart
 
@@ -47,6 +47,7 @@ Kuzzle Kubernetes chart
 | replicaCount | int | `1` | Number of Kuzzle pod replicas |
 | resources | object | `{}` | Resource requests/limits for the Kuzzle container |
 | securityContext | object | `{}` | Security context for the main Kuzzle container |
+| serviceAccountName | string | `""` | Name of an existing ServiceAccount for the pod (empty: the namespace's `default`) |
 | terminationGracePeriodSeconds | int | `30` | Grace period between SIGTERM and SIGKILL (the preStop hook runs inside it) |
 | tolerations | list | `[]` | Tolerations for tainted nodes |
 | topologySpreadConstraints.enabled | bool | `false` | Enable pod distribution via topology spread constraints |

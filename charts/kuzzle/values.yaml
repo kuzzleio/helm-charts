@@ -34,6 +34,14 @@ updateStrategy:
     # -- Max unavailable pods during rolling update
     maxUnavailable: 1
 
+# ServiceAccount the pod runs as. The chart does not create it: whoever grants
+# it rights (RBAC) should own it too, so it lives next to its Role bindings —
+# for paas-console, in the Terraform of hosting/paas-console (#683). Empty keeps
+# the namespace's `default` ServiceAccount, i.e. the behaviour of every release
+# that predates this value.
+# -- Name of an existing ServiceAccount for the pod (empty: the namespace's `default`)
+serviceAccountName: ""
+
 podSecurityContext:
   # -- fsGroup for shared volumes in the pod
   fsGroup: 1000
