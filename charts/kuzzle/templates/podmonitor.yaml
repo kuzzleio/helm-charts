@@ -1,4 +1,10 @@
-{{- if .Values.podMonitor.enabled }}
+{{- /*
+  `helm upgrade --reuse-values` replaces the new chart's defaults with the old
+  release's values: a release installed before 1.13.0 has no `podMonitor` at
+  all. Read it through a dict so that case renders nothing instead of failing.
+*/ -}}
+{{- $podMonitor := .Values.podMonitor | default dict }}
+{{- if $podMonitor.enabled }}
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
@@ -8,7 +14,7 @@ metadata:
     {{- range $key, $value := .Values.labels }}
     {{ $key }}: {{ $value | quote }}
     {{- end }}
-    {{- range $key, $value := .Values.podMonitor.labels }}
+    {{- range $key, $value := $podMonitor.labels }}
     {{ $key }}: {{ $value | quote }}
     {{- end }}
 spec:
@@ -18,11 +24,11 @@ spec:
   podMetricsEndpoints:
     - port: kuzzle-api
       path: {{ .Values.metrics.path | quote }}
-      interval: {{ .Values.podMonitor.interval | quote }}
+      interval: {{ $podMonitor.interval | default "60s" | quote }}
       honorLabels: true
       authorization:
         type: Bearer
         credentials:
-          name: {{ required "podMonitor.secretName is required when podMonitor.enabled" .Values.podMonitor.secretName | quote }}
-          key: {{ required "podMonitor.secretKey is required when podMonitor.enabled" .Values.podMonitor.secretKey | quote }}
+          name: {{ required "podMonitor.secretName is required when podMonitor.enabled" $podMonitor.secretName | quote }}
+          key: {{ required "podMonitor.secretKey is required when podMonitor.enabled" $podMonitor.secretKey | quote }}
 {{- end }}
