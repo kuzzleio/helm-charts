@@ -151,6 +151,8 @@ podMonitor:
   secretKey: api-key
   # -- Extra labels on the PodMonitor, e.g. to match a collector's selector
   labels: {}
+  # -- Labels set on the scrape target, so that `up` and `scrape_*` carry them too (e.g. `project`, `environment`)
+  targetLabels: {}
 
 # -- Security context for the main Kuzzle container
 securityContext: {}

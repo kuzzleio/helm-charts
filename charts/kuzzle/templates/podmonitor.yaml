@@ -26,6 +26,15 @@ spec:
       path: {{ .Values.metrics.path | quote }}
       interval: {{ $podMonitor.interval | default "60s" | quote }}
       honorLabels: true
+      {{- with (.Values.podMonitor.targetLabels | default dict) }}
+      # Target labels: `up` and `scrape_*` only carry these, never the
+      # labels the exporter puts on its own series.
+      relabelings:
+        {{- range $key, $value := . }}
+        - targetLabel: {{ $key | quote }}
+          replacement: {{ $value | quote }}
+        {{- end }}
+      {{- end }}
       authorization:
         type: Bearer
         credentials:

@@ -1,6 +1,6 @@
 # kuzzle
 
-![Version: 1.13.1](https://img.shields.io/badge/Version-1.13.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.56.0](https://img.shields.io/badge/AppVersion-2.56.0-informational?style=flat-square)
+![Version: 1.14.0](https://img.shields.io/badge/Version-1.14.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.56.0](https://img.shields.io/badge/AppVersion-2.56.0-informational?style=flat-square)
 
 Kuzzle Kubernetes chart
 
@@ -42,6 +42,7 @@ Kuzzle Kubernetes chart
 | podMonitor.labels | object | `{}` | Extra labels on the PodMonitor, e.g. to match a collector's selector |
 | podMonitor.secretKey | string | `"api-key"` | Key of the API key in that Secret |
 | podMonitor.secretName | string | `"kuzzle-metrics-scraper"` | Secret, in the release namespace, holding the API key sent as a Bearer token |
+| podMonitor.targetLabels | object | `{}` | Labels set on the scrape target, so that `up` and `scrape_*` carry them too (e.g. `project`, `environment`) |
 | podSecurityContext.fsGroup | int | `1000` | fsGroup for shared volumes in the pod |
 | probes.liveness.httpGet | object | `{"path":"/_healthcheck","port":"kuzzle-api"}` | Liveness probe configuration |
 | probes.liveness.httpGet.path | string | `"/_healthcheck"` | Liveness probe path |
