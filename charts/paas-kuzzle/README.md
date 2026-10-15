@@ -1,6 +1,6 @@
 # paas-kuzzle
 
-![Version: 3.3.0](https://img.shields.io/badge/Version-3.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.47.0](https://img.shields.io/badge/AppVersion-2.47.0-informational?style=flat-square)
+![Version: 3.4.0](https://img.shields.io/badge/Version-3.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.56.0](https://img.shields.io/badge/AppVersion-2.56.0-informational?style=flat-square)
 
 Kuzzle v2, redis v8 and elasticsearch v7 under the same roof
 
@@ -10,7 +10,7 @@ Kuzzle v2, redis v8 and elasticsearch v7 under the same roof
 |------------|------|---------|
 | https://charts.bitnami.com/bitnami/ | redis | 22.0.7 |
 | https://helm.elastic.co/ | elasticsearch | 7.17.3 |
-| https://kuzzleio.github.io/helm-charts/ | kuzzle | 1.5.1 |
+| file://../kuzzle | kuzzle | 1.15.0 |
 
 ## Values
 
