@@ -23,6 +23,13 @@ kuzzle:
     port: 7512
     path: "/_/metrics"
 
+  # Off until the console has written the scraper's API key Secret
+  # (paas-console ADR-0007). The label is the one the PaaS Alloy selects.
+  podMonitor:
+    enabled: false
+    labels:
+      paas.kuzzle.io/metrics: kuzzle
+
 elasticsearch:
   global:
     kibanaEnabled: false

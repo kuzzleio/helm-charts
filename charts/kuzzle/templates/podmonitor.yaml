@@ -1,0 +1,28 @@
+{{- if .Values.podMonitor.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: {{ include "kuzzle.fullname" . }}
+  labels:
+    {{- include "kuzzle.labels" . | nindent 4 }}
+    {{- range $key, $value := .Values.labels }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+    {{- range $key, $value := .Values.podMonitor.labels }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "kuzzle.selectorLabels" . | nindent 6 }}
+  podMetricsEndpoints:
+    - port: kuzzle-api
+      path: {{ .Values.metrics.path | quote }}
+      interval: {{ .Values.podMonitor.interval | quote }}
+      honorLabels: true
+      authorization:
+        type: Bearer
+        credentials:
+          name: {{ required "podMonitor.secretName is required when podMonitor.enabled" .Values.podMonitor.secretName | quote }}
+          key: {{ required "podMonitor.secretKey is required when podMonitor.enabled" .Values.podMonitor.secretKey | quote }}
+{{- end }}

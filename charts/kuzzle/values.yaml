@@ -134,6 +134,24 @@ metrics:
   # -- HTTP path for metrics endpoint
   path: "/_/metrics"
 
+# PodMonitor (Prometheus Operator CRD) scraping `metrics.path` on the
+# `kuzzle-api` port with an API key. Off by default: the CRD must exist in the
+# cluster, and the Secret holding the key is usually written *after* the first
+# deployment (the key is signed by this very Kuzzle, from a role its
+# application imports). Turn it on once the Secret exists, otherwise the
+# target is scraped without credentials and reports down.
+podMonitor:
+  # -- Render a PodMonitor for the Kuzzle pods (requires the `monitoring.coreos.com/v1` CRD)
+  enabled: false
+  # -- Scrape interval
+  interval: 60s
+  # -- Secret, in the release namespace, holding the API key sent as a Bearer token
+  secretName: kuzzle-metrics-scraper
+  # -- Key of the API key in that Secret
+  secretKey: api-key
+  # -- Extra labels on the PodMonitor, e.g. to match a collector's selector
+  labels: {}
+
 # -- Security context for the main Kuzzle container
 securityContext: {}
 
