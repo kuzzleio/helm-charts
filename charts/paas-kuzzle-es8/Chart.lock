@@ -1,12 +1,12 @@
 dependencies:
 - name: kuzzle
   repository: file://../kuzzle
-  version: 1.10.0
+  version: 1.13.0
 - name: elasticsearch-8
   repository: file://../elasticsearch-8
   version: 21.7.0
 - name: redis
   repository: https://charts.bitnami.com/bitnami/
   version: 25.4.1
-digest: sha256:1876ab24482409ba902d5baec323e4c1bee573330613844216cc2e7671ac55d4
-generated: "2026-06-23T15:11:28.148164+02:00"
+digest: sha256:9ef71c0b6b76fe53e92d6efba038391b2a2b84795400ffa0fc6b61f81520b8f9
+generated: "2026-10-15T09:04:00.61801+02:00"

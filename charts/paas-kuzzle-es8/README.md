@@ -1,6 +1,6 @@
 # paas-kuzzle-es8
 
-![Version: 1.5.0](https://img.shields.io/badge/Version-1.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.56.0](https://img.shields.io/badge/AppVersion-2.56.0-informational?style=flat-square)
+![Version: 1.6.0](https://img.shields.io/badge/Version-1.6.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.56.0](https://img.shields.io/badge/AppVersion-2.56.0-informational?style=flat-square)
 
 Kuzzle v2, redis v8 and elasticsearch v8 under the same roof
 
@@ -9,7 +9,7 @@ Kuzzle v2, redis v8 and elasticsearch v8 under the same roof
 | Repository | Name | Version |
 |------------|------|---------|
 | file://../elasticsearch-8 | elasticsearch(elasticsearch-8) | 21.7.0 |
-| file://../kuzzle | kuzzle | 1.10.0 |
+| file://../kuzzle | kuzzle | 1.13.0 |
 | https://charts.bitnami.com/bitnami/ | redis | 25.4.1 |
 
 ## Values
@@ -50,6 +50,8 @@ Kuzzle v2, redis v8 and elasticsearch v8 under the same roof
 | kuzzle.image.pullPolicy | string | `"Always"` |  |
 | kuzzle.metrics.path | string | `"/_/metrics"` |  |
 | kuzzle.metrics.port | int | `7512` |  |
+| kuzzle.podMonitor.enabled | bool | `false` |  |
+| kuzzle.podMonitor.labels."paas.kuzzle.io/metrics" | string | `"kuzzle"` |  |
 | kuzzle.replicaCount | int | `1` |  |
 | kuzzle.updateStrategy | string | `"RollingUpdate"` |  |
 | redis.auth.enabled | bool | `false` |  |
