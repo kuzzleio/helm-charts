@@ -25,14 +25,17 @@ nameOverride: ""
 fullnameOverride: ""
 
 
+# The new pod starts and must be Ready before the old one stops: with a single
+# replica, `maxSurge: 0` stopped Kuzzle first and cut the API for the whole
+# startup (~30-45 s, measured on a PaaS backend, 2026-10-15).
 updateStrategy:
   # -- Deployment update strategy type
   type: RollingUpdate
   rollingUpdate:
     # -- Max surge pods during rolling update
-    maxSurge: 0
+    maxSurge: 1
     # -- Max unavailable pods during rolling update
-    maxUnavailable: 1
+    maxUnavailable: 0
 
 # ServiceAccount the pod runs as. The chart does not create it: whoever grants
 # it rights (RBAC) should own it too, so it lives next to its Role bindings —

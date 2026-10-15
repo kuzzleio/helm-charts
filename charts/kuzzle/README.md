@@ -1,6 +1,6 @@
 # kuzzle
 
-![Version: 1.14.0](https://img.shields.io/badge/Version-1.14.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.56.0](https://img.shields.io/badge/AppVersion-2.56.0-informational?style=flat-square)
+![Version: 1.15.0](https://img.shields.io/badge/Version-1.15.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.56.0](https://img.shields.io/badge/AppVersion-2.56.0-informational?style=flat-square)
 
 Kuzzle Kubernetes chart
 
@@ -60,8 +60,8 @@ Kuzzle Kubernetes chart
 | topologySpreadConstraints.maxSkew | int | `1` | Maximum allowed skew between topology domains (1 = most even) |
 | topologySpreadConstraints.topologyKey | string | `"kubernetes.io/hostname"` | Topology key to spread across (e.g., kubernetes.io/hostname or topology.kubernetes.io/zone) |
 | topologySpreadConstraints.whenUnsatisfiable | string | `"DoNotSchedule"` | Behavior when constraints cannot be satisfied (DoNotSchedule|ScheduleAnyway) |
-| updateStrategy.rollingUpdate.maxSurge | int | `0` | Max surge pods during rolling update |
-| updateStrategy.rollingUpdate.maxUnavailable | int | `1` | Max unavailable pods during rolling update |
+| updateStrategy.rollingUpdate.maxSurge | int | `1` | Max surge pods during rolling update |
+| updateStrategy.rollingUpdate.maxUnavailable | int | `0` | Max unavailable pods during rolling update |
 | updateStrategy.type | string | `"RollingUpdate"` | Deployment update strategy type |
 
 ----------------------------------------------
