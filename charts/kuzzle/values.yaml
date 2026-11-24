@@ -206,6 +206,11 @@ ingress:
 mtls:
   # -- Render the mTLS resources
   enabled: false
+  networkPolicy:
+    # -- Render a NetworkPolicy on the Kuzzle pods when mTLS is enabled
+    enabled: true
+    # -- Namespaces (besides the release namespace) whose pods may reach Kuzzle; empty allows only the release namespace
+    allowedNamespaces: []
   # -- IngressClass of the mTLS ingresses; empty: `ingress.className`
   className: ""
   # -- Also strip a forged client-certificate header on the main ingress

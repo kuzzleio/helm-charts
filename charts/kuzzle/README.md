@@ -42,6 +42,8 @@ Kuzzle Kubernetes chart
 | mtls.middlewares.forward.name | string | `""` | Name of the Middleware forwarding the client certificate; empty: `<fullname>-forward-client-cert` |
 | mtls.middlewares.forward.pem | bool | `true` | Forward the certificate as PEM |
 | mtls.middlewares.strip.name | string | `""` | Name of the Middleware removing the incoming header; empty: `<fullname>-strip-client-cert` |
+| mtls.networkPolicy.allowedNamespaces | list | `[]` | Namespaces (besides the release namespace) whose pods may reach Kuzzle; empty allows only the release namespace |
+| mtls.networkPolicy.enabled | bool | `true` | Render a NetworkPolicy on the Kuzzle pods when mTLS is enabled |
 | mtls.stripOnMainIngress | bool | `true` | Also strip a forged client-certificate header on the main ingress |
 | mtls.tlsOption.clientAuthType | string | `"RequestClientCert"` | Traefik `clientAuth.clientAuthType` |
 | mtls.tlsOption.create | bool | `true` | Render the TLSOption; false: reference an existing one through `name` |
