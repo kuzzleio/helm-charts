@@ -1,0 +1,140 @@
+{{- $mtls := .Values.mtls | default dict -}}
+{{- if $mtls.enabled -}}
+{{- $tlsOption := $mtls.tlsOption | default dict -}}
+{{- $middlewares := $mtls.middlewares | default dict -}}
+{{- $forward := $middlewares.forward | default dict -}}
+{{- $tlsOptionName := include "kuzzle.mtls.tlsOptionName" . -}}
+{{- $stripName := include "kuzzle.mtls.stripName" . -}}
+{{- $forwardName := include "kuzzle.mtls.forwardName" . -}}
+{{- $tlsOptionRef := include "kuzzle.mtls.crdRef" (list . $tlsOptionName) -}}
+{{- $middlewareRefs := printf "%s,%s" (include "kuzzle.mtls.crdRef" (list . $stripName)) (include "kuzzle.mtls.crdRef" (list . $forwardName)) -}}
+{{- $labels := mergeOverwrite (fromYaml (include "kuzzle.labels" .)) (deepCopy (.Values.labels | default dict)) -}}
+{{- $fullName := include "kuzzle.fullname" . -}}
+{{- $httpPort := .Values.entrypoints.http.port -}}
+{{- $ingress := .Values.ingress | default dict -}}
+{{- $hosts := dict -}}
+{{- if $ingress.enabled -}}
+  {{- range $ingress.hosts | default list -}}
+    {{- if .host -}}
+      {{- $_ := set $hosts .host true -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- $names := dict -}}
+{{- range $index, $entry := $mtls.ingresses | default list -}}
+  {{- $name := $entry.name | default "" -}}
+  {{- if not $name -}}
+    {{- fail (printf "mtls.ingresses[%d] has no name" $index) -}}
+  {{- end -}}
+  {{- if not ($entry.hosts | default list) -}}
+    {{- fail (printf "mtls.ingresses[%d] (%s) has no hosts" $index $name) -}}
+  {{- end -}}
+  {{- if hasKey $names $name -}}
+    {{- fail (printf "mtls.ingresses: duplicate name %s" $name) -}}
+  {{- end -}}
+  {{- $_ := set $names $name true -}}
+  {{- range $entry.hosts -}}
+    {{- if and .host (hasKey $hosts .host) -}}
+      {{- fail (printf "host %s is in several ingresses: Traefik would apply the default TLS option to it" .host) -}}
+    {{- end -}}
+  {{- end -}}
+  {{- range $entry.hosts -}}
+    {{- if .host -}}
+      {{- $_ := set $hosts .host true -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- if ne (toString (dig "create" true $tlsOption)) "false" }}
+---
+apiVersion: traefik.io/v1alpha1
+kind: TLSOption
+metadata:
+  name: {{ $tlsOptionName }}
+  labels:
+    {{- toYaml $labels | nindent 4 }}
+spec:
+  {{- mergeOverwrite (deepCopy (dict "clientAuth" (dict "clientAuthType" (dig "clientAuthType" "RequestClientCert" $tlsOption)))) (deepCopy ($tlsOption.extraSpec | default dict)) | toYaml | nindent 2 }}
+{{- end }}
+{{- if ne (toString (dig "create" true $middlewares)) "false" }}
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: {{ $stripName }}
+  labels:
+    {{- toYaml $labels | nindent 4 }}
+spec:
+  headers:
+    customRequestHeaders:
+      X-Forwarded-Tls-Client-Cert: ""
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: {{ $forwardName }}
+  labels:
+    {{- toYaml $labels | nindent 4 }}
+spec:
+  passTLSClientCert:
+    {{- mergeOverwrite (deepCopy (dict "pem" (dig "pem" true $forward))) (deepCopy ($forward.extraSpec | default dict)) | toYaml | nindent 4 }}
+{{- end }}
+{{- range $entry := $mtls.ingresses | default list }}
+{{- $entryLabels := mergeOverwrite (deepCopy $labels) (deepCopy ($entry.labels | default dict)) -}}
+{{- $annotations := mergeOverwrite (deepCopy ($entry.annotations | default dict)) (dict "traefik.ingress.kubernetes.io/router.tls.options" $tlsOptionRef "traefik.ingress.kubernetes.io/router.middlewares" $middlewareRefs) -}}
+{{- $className := $entry.className | default $mtls.className | default $ingress.className -}}
+{{- if and $className (not (semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion)) (not (hasKey $annotations "kubernetes.io/ingress.class")) -}}
+  {{- $_ := set $annotations "kubernetes.io/ingress.class" $className -}}
+{{- end -}}
+{{- printf "\n---\n" -}}
+{{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
+apiVersion: networking.k8s.io/v1
+{{- else if semverCompare ">=1.14-0" $.Capabilities.KubeVersion.GitVersion }}
+apiVersion: networking.k8s.io/v1beta1
+{{- else }}
+apiVersion: extensions/v1beta1
+{{- end }}
+kind: Ingress
+metadata:
+  name: {{ printf "%s-%s" $fullName $entry.name | trunc 63 | trimSuffix "-" }}
+  labels:
+    {{- toYaml $entryLabels | nindent 4 }}
+  annotations:
+    {{- toYaml $annotations | nindent 4 }}
+spec:
+  {{- if and $className (semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion) }}
+  ingressClassName: {{ $className }}
+  {{- end }}
+  {{- if $entry.tls }}
+  tls:
+    {{- range $entry.tls }}
+    - hosts:
+        {{- range .hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .secretName }}
+    {{- end }}
+  {{- end }}
+  rules:
+    {{- range $entry.hosts }}
+    - host: {{ .host | quote }}
+      http:
+        paths:
+          {{- range .paths }}
+          - path: {{ .path }}
+            {{- if and .pathType (semverCompare ">=1.18-0" $.Capabilities.KubeVersion.GitVersion) }}
+            pathType: {{ .pathType }}
+            {{- end }}
+            backend:
+              {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
+              service:
+                name: {{ $fullName }}
+                port:
+                  number: {{ $httpPort }}
+              {{- else }}
+              serviceName: {{ $fullName }}
+              servicePort: {{ $httpPort }}
+              {{- end }}
+          {{- end }}
+    {{- end }}
+{{- end }}
+{{- end }}
