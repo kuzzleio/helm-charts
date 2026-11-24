@@ -196,3 +196,46 @@ ingress:
   hosts: []
   # -- Ingress TLS configuration list
   tls: []
+
+# Client-certificate (mTLS) access through Traefik, e.g. for
+# kuzzle-plugin-auth-passport-certs. Renders a TLSOption asking for a client
+# certificate, a Middleware forwarding it to Kuzzle in
+# `X-Forwarded-Tls-Client-Cert`, a Middleware removing that header from the
+# incoming request (Traefik never removes a forged one), and one Ingress per
+# `ingresses` entry. Requires the `traefik.io/v1alpha1` CRDs.
+mtls:
+  # -- Render the mTLS resources
+  enabled: false
+  networkPolicy:
+    # -- Render a NetworkPolicy on the Kuzzle pods when mTLS is enabled
+    enabled: true
+    # -- Namespaces (besides the release namespace) whose pods may reach Kuzzle; empty allows only the release namespace
+    allowedNamespaces: []
+  # -- IngressClass of the mTLS ingresses; empty: `ingress.className`
+  className: ""
+  # -- Also strip a forged client-certificate header on the main ingress
+  stripOnMainIngress: true
+  tlsOption:
+    # -- Render the TLSOption; false: reference an existing one through `name`
+    create: true
+    # -- TLSOption name; empty: `<fullname>-mtls`
+    name: ""
+    # -- Traefik `clientAuth.clientAuthType`
+    clientAuthType: RequestClientCert
+    # -- Deep-merged into the TLSOption spec (e.g. `minVersion`, `sniStrict`, `clientAuth.secretNames`)
+    extraSpec: {}
+  middlewares:
+    # -- Render the strip and forward Middlewares; false: reference existing ones through their `name`
+    create: true
+    strip:
+      # -- Name of the Middleware removing the incoming header; empty: `<fullname>-strip-client-cert`
+      name: ""
+    forward:
+      # -- Name of the Middleware forwarding the client certificate; empty: `<fullname>-forward-client-cert`
+      name: ""
+      # -- Forward the certificate as PEM
+      pem: true
+      # -- Deep-merged into `spec.passTLSClientCert` (e.g. `info.subject.commonName: true`)
+      extraSpec: {}
+  # -- mTLS ingresses, one per tenant host: `[{name, className, labels, annotations, hosts, tls}]`, `hosts`/`tls` shaped like `ingress.hosts`/`ingress.tls`
+  ingresses: []

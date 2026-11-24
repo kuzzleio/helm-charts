@@ -1,11 +1,23 @@
 {{- if .Values.ingress.enabled -}}
 {{- $fullName := include "kuzzle.fullname" . -}}
 {{- $httpPort := .Values.entrypoints.http.port -}}
+{{- $annotations := deepCopy (.Values.ingress.annotations | default dict) -}}
 {{- if and .Values.ingress.className (not (semverCompare ">=1.18-0" .Capabilities.KubeVersion.GitVersion)) }}
-  {{- if not (hasKey .Values.ingress.annotations "kubernetes.io/ingress.class") }}
-  {{- $_ := set .Values.ingress.annotations "kubernetes.io/ingress.class" .Values.ingress.className}}
+  {{- if not (hasKey $annotations "kubernetes.io/ingress.class") }}
+  {{- $_ := set $annotations "kubernetes.io/ingress.class" .Values.ingress.className}}
   {{- end }}
 {{- end }}
+{{- $mtls := .Values.mtls | default dict -}}
+{{- if and $mtls.enabled (ne (toString (dig "stripOnMainIngress" true $mtls)) "false") -}}
+  {{- $stripName := include "kuzzle.mtls.stripName" . -}}
+  {{- $stripRef := include "kuzzle.mtls.crdRef" (list . $stripName) -}}
+  {{- $existing := get $annotations "traefik.ingress.kubernetes.io/router.middlewares" -}}
+  {{- if $existing -}}
+    {{- $_ := set $annotations "traefik.ingress.kubernetes.io/router.middlewares" (printf "%s,%s" $stripRef $existing) -}}
+  {{- else -}}
+    {{- $_ := set $annotations "traefik.ingress.kubernetes.io/router.middlewares" $stripRef -}}
+  {{- end -}}
+{{- end -}}
 {{- if semverCompare ">=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
 apiVersion: networking.k8s.io/v1
 {{- else if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
@@ -18,7 +30,7 @@ metadata:
   name: {{ $fullName }}
   labels:
     {{- include "kuzzle.labels" . | nindent 4 }}
-  {{- with .Values.ingress.annotations }}
+  {{- with $annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
