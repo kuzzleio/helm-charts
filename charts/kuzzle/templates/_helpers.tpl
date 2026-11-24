@@ -50,3 +50,51 @@ Selector labels
 app.kubernetes.io/name: {{ include "kuzzle.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end -}}
+
+{{/*
+mTLS resource names: the given name, or one derived from the fullname.
+`helm upgrade --reuse-values` from a release older than 1.16.0 has no `mtls`
+key at all: read it through dicts so it renders as disabled.
+*/}}
+{{- define "kuzzle.mtls.tlsOptionName" -}}
+{{- $tlsOption := dig "tlsOption" dict (.Values.mtls | default dict) -}}
+{{- if $tlsOption.name -}}
+{{- $tlsOption.name -}}
+{{- else if eq (toString (dig "create" true $tlsOption)) "false" -}}
+{{- fail "mtls.tlsOption.name is required when mtls.tlsOption.create is false" -}}
+{{- else -}}
+{{- printf "%s-mtls" (include "kuzzle.fullname" .) | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+{{- end -}}
+
+{{- define "kuzzle.mtls.stripName" -}}
+{{- include "kuzzle.mtls.middlewareName" (list . "strip" "strip-client-cert") -}}
+{{- end -}}
+
+{{- define "kuzzle.mtls.forwardName" -}}
+{{- include "kuzzle.mtls.middlewareName" (list . "forward" "forward-client-cert") -}}
+{{- end -}}
+
+{{/*
+Args: root context, middleware key under `mtls.middlewares`, default suffix.
+*/}}
+{{- define "kuzzle.mtls.middlewareName" -}}
+{{- $root := index . 0 -}}
+{{- $key := index . 1 -}}
+{{- $middlewares := dig "middlewares" dict ($root.Values.mtls | default dict) -}}
+{{- $name := dig $key "name" "" $middlewares -}}
+{{- if $name -}}
+{{- $name -}}
+{{- else if eq (toString (dig "create" true $middlewares)) "false" -}}
+{{- fail (printf "mtls.middlewares.%s.name is required when mtls.middlewares.create is false" $key) -}}
+{{- else -}}
+{{- printf "%s-%s" (include "kuzzle.fullname" $root) (index . 2) | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Traefik reference to a CRD in the release namespace: `<ns>-<name>@kubernetescrd`.
+*/}}
+{{- define "kuzzle.mtls.crdRef" -}}
+{{- printf "%s-%s@kubernetescrd" (index . 0).Release.Namespace (index . 1) -}}
+{{- end -}}
