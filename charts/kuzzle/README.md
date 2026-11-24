@@ -1,6 +1,6 @@
 # kuzzle
 
-![Version: 1.15.0](https://img.shields.io/badge/Version-1.15.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.56.0](https://img.shields.io/badge/AppVersion-2.56.0-informational?style=flat-square)
+![Version: 1.16.0](https://img.shields.io/badge/Version-1.16.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.56.0](https://img.shields.io/badge/AppVersion-2.56.0-informational?style=flat-square)
 
 Kuzzle Kubernetes chart
 
@@ -34,6 +34,19 @@ Kuzzle Kubernetes chart
 | lifecycle | object | `{"preStop":{"exec":{"command":["/bin/sh","-c","sleep 10"]}}}` | Container lifecycle hooks; the default preStop drains the endpoint before shutdown (set to `{}` to disable) |
 | metrics.path | string | `"/_/metrics"` | HTTP path for metrics endpoint |
 | metrics.port | int | `7512` | Port exposed for metrics scraping |
+| mtls.className | string | `""` | IngressClass of the mTLS ingresses; empty: `ingress.className` |
+| mtls.enabled | bool | `false` | Render the mTLS resources |
+| mtls.ingresses | list | `[]` | mTLS ingresses, one per tenant host: `[{name, className, labels, annotations, hosts, tls}]`, `hosts`/`tls` shaped like `ingress.hosts`/`ingress.tls` |
+| mtls.middlewares.create | bool | `true` | Render the strip and forward Middlewares; false: reference existing ones through their `name` |
+| mtls.middlewares.forward.extraSpec | object | `{}` | Deep-merged into `spec.passTLSClientCert` (e.g. `info.subject.commonName: true`) |
+| mtls.middlewares.forward.name | string | `""` | Name of the Middleware forwarding the client certificate; empty: `<fullname>-forward-client-cert` |
+| mtls.middlewares.forward.pem | bool | `true` | Forward the certificate as PEM |
+| mtls.middlewares.strip.name | string | `""` | Name of the Middleware removing the incoming header; empty: `<fullname>-strip-client-cert` |
+| mtls.stripOnMainIngress | bool | `true` | Also strip a forged client-certificate header on the main ingress |
+| mtls.tlsOption.clientAuthType | string | `"RequestClientCert"` | Traefik `clientAuth.clientAuthType` |
+| mtls.tlsOption.create | bool | `true` | Render the TLSOption; false: reference an existing one through `name` |
+| mtls.tlsOption.extraSpec | object | `{}` | Deep-merged into the TLSOption spec (e.g. `minVersion`, `sniStrict`, `clientAuth.secretNames`) |
+| mtls.tlsOption.name | string | `""` | TLSOption name; empty: `<fullname>-mtls` |
 | nameOverride | string | `""` | String to partially override chart name |
 | nodeSelector | object | `{}` | Node labels for pod assignment |
 | podLabels | object | `{}` | Extra labels added to the pod template metadata |
